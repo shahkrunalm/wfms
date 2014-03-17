@@ -3,6 +3,7 @@ package com.wfms.model;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -46,6 +47,12 @@ public class User {
 
 	@Column(name = "DESIGNATION")
 	private String designation;
+	
+	@Embedded
+	private Address userAddress;
+	
+	@Embedded
+	private Contact contact;
 
 	@Column(name = "STATUS")
 	private int status;
@@ -124,6 +131,38 @@ public class User {
 
 	public User() {
 		super();
+	}
+
+	public String getUserType() {
+		return userType;
+	}
+
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+
+	public String getDesignation() {
+		return designation;
+	}
+
+	public void setDesignation(String designation) {
+		this.designation = designation;
+	}
+
+	public Address getUserAddress() {
+		return userAddress;
+	}
+
+	public void setUserAddress(Address userAddress) {
+		this.userAddress = userAddress;
+	}
+
+	public Contact getContact() {
+		return contact;
+	}
+
+	public void setContact(Contact contact) {
+		this.contact = contact;
 	}
 
 }

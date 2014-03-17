@@ -8,6 +8,8 @@
 	<bean id="country" class="com.wfms.model.Country" />
 	<bean id="state" class="com.wfms.model.State" />
 	<bean id="city" class="com.wfms.model.City" />
+	<bean id="address" class="com.wfms.model.Address" />
+	<bean id="contact" class="com.wfms.model.Contact" />
 	<bean id="user" class="com.wfms.model.User" />
 	<bean id="message" class="com.wfms.model.Message" />
 	<bean id="company" class="com.wfms.model.Company" />

@@ -19,6 +19,8 @@ import com.wfms.dao.MessageDao;
 import com.wfms.dao.UserDao;
 import com.wfms.dao.impl.MessageDaoImpl;
 import com.wfms.dao.impl.UserDaoImpl;
+import com.wfms.model.Address;
+import com.wfms.model.Contact;
 import com.wfms.model.Message;
 import com.wfms.model.User;
 import com.wfms.util.Constants;
@@ -29,6 +31,10 @@ import com.wfms.util.Constants;
 @WebServlet("/UserController")
 public class UserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
+	private Address address = null;
+
+	private Contact contact = null;
 
 	private User user = null;
 
@@ -59,14 +65,16 @@ public class UserController extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		final String action = request.getParameter(Constants.ACTION);
-		this.context = new ClassPathXmlApplicationContext(
-				"application-context.xml");
+		this.context = new ClassPathXmlApplicationContext("application-context.xml");
 		this.userDao = (UserDaoImpl) this.context.getBean("userDao");
 		this.messageDao = (MessageDaoImpl) this.context.getBean("messageDao");
-
 		if (action.equals(Constants.ADD)) {
 			this.user = (User) this.context.getBean("user");
+			this.address = (Address) this.context.getBean("address");
+			this.contact = (Contact) this.context.getBean("contact");
+			
 			final String username = request.getParameter("username");
+			final String userType = request.getParameter("userType");
 			final String password = Constants.DEFAULT_PASSWORD;
 			final String firstName = request.getParameter("firstName");
 			final String lastName = request.getParameter("lastName");
@@ -77,8 +85,21 @@ public class UserController extends HttpServlet {
 			this.user.setFirstName(firstName);
 			this.user.setLastName(lastName);
 			this.user.setEmail(email);
+			this.user.setUserType(userType);
 			this.user.setRegistrationDate(new Date());
 			this.user.setStatus(Constants.ACTIVE);
+			
+			this.address.setStreet("street");
+			this.address.setCountry("india");
+			this.address.setState("gujarat");
+			this.address.setCity("ahmedabad");
+			this.address.setZipcode("zipcode");
+			this.user.setUserAddress(this.address);
+			
+			this.contact.setWebsite("website");
+			this.contact.setWorkPhone("working fone number");
+			this.user.setContact(this.contact);
+			
 			this.userDao.save(this.user);
 
 			// send message
@@ -97,7 +118,7 @@ public class UserController extends HttpServlet {
 				out.write("true");
 			else
 				out.write("false");
-		} else if(action.equals(Constants.CHANGE_PASSWORD)){
+		} else if (action.equals(Constants.CHANGE_PASSWORD)) {
 			// session base code needs to be added
 		}
 	}

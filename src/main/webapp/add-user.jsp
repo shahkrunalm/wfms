@@ -8,40 +8,47 @@
 <%@ include file="header.jsp"%>
 </head>
 <script type="text/javascript">
-	$().ready(function() {
-		$("#add-user-form").validate({
-			errorClass : "my-error-class",
-			rules : {
-				firstName : "required",
-				username: { 
-	                required: true, minlength: 5,
-					remote: {
-	        					url: "./UserController?action=userExists",
-	        					type: "get",
-	        					data: {
-	          							username: function() {
-	            						return $("#username").val();
-	          						}
-	        					}
-	      					}
-	          	}
-			},
-			messages : {
-				username:
-	        	{
-	           		remote: jQuery.validator.format(" someone already has that username, please try another")
-	        	}
-			}
-		});
-	});
-	
+	$()
+			.ready(
+					function() {
+						$("#add-user-form")
+								.validate(
+										{
+											errorClass : "my-error-class",
+											rules : {
+												firstName : "required",
+												username : {
+													required : true,
+													minlength : 5,
+													remote : {
+														url : "./UserController?action=userExists",
+														type : "get",
+														data : {
+															username : function() {
+																return $(
+																		"#username")
+																		.val();
+															}
+														}
+													}
+												}
+											},
+											messages : {
+												username : {
+													remote : jQuery.validator
+															.format(" someone already has that username, please try another")
+												}
+											}
+										});
+					});
+
 	$(function() {
 		$("#birthDate").datepicker({
-			changeMonth: true,
-			changeYear: true,
-			dateFormat: "dd-mm-yy",
-			minDate: "-780m +0w",
-			maxDate: "-144m +0w"
+			changeMonth : true,
+			changeYear : true,
+			dateFormat : "dd-mm-yy",
+			minDate : "-780m +0w",
+			maxDate : "-144m +0w"
 		});
 	});
 </script>
@@ -57,7 +64,8 @@
 							<td><h4>Add User</h4></td>
 						</tr>
 					</table>
-					<form action="./UserController" name="add-user-forms" id="add-user-forms" method="post">
+					<form action="./UserController" name="add-user-forms"
+						id="add-user-forms" method="post">
 						<input type="hidden" name="action" value="add" />
 						<table width="100%">
 							<tr>
@@ -76,9 +84,12 @@
 									placeholder="enter last name"></td>
 							</tr>
 							<tr>
-								<td class="bold">Email</td>
-								<td><input id="email" name="email"
-									placeholder="enter email"></td>
+								<td class="bold">User Type</td>
+								<td><select name="userType" id="userType">
+										<option value="admin">Admin</option>
+										<option value="manager">Manager</option>
+										<option value="employee">Employee</option>
+								</select></td>
 							</tr>
 							<tr>
 								<td class="bold">Email</td>

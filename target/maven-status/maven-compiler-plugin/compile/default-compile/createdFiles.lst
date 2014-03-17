@@ -4,6 +4,7 @@ com\wfms\dao\CityDao.class
 com\wfms\controller\StateController.class
 com\wfms\dao\ProjectDao.class
 com\wfms\dao\impl\MessageDaoImpl.class
+com\wfms\model\Address.class
 com\wfms\model\Story.class
 com\wfms\dao\StateDao.class
 com\wfms\util\Constants.class
@@ -40,3 +41,4 @@ com\wfms\model\Task.class
 com\wfms\controller\CompanyController.class
 com\wfms\init\LoadOnStartUp.class
 com\wfms\hibernate\HibernateUtil.class
+com\wfms\model\Contact.class
