@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+  "-//Hibernate/Hibernate Configuration DTD//EN"
+  "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+     <session-factory>
+     	<!-- Properties  -->
+     	<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+       	<property name="connection.url">jdbc:mysql://localhost:3306/wfms</property>
+        <property name="connection.username">root</property>
+        <property name="connection.password">root</property>
+        <!-- Set a dialect, so that Hibernate knows which SQL variation it has to generate to talk to database -->
+        <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+        <!-- 
+        <property name="current_session_context_class">thread</property>
+		<property name="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
+        <property name="connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
+         -->
+        <!-- This is the minimum number of JDBC connections that C3P0 keeps ready at all times -->
+       	<property name="c3p0.minPoolSize">5</property>
+       	
+       	<!-- This is the maximum number of JDBC connections in the pool. An exception is thrown at runtime if this number is exhausted. -->
+       	<property name="c3p0.maxPoolSize">20</property>
+       	
+       	<!-- Specify the timeout period (in this case, 3000 seconds) after which an idle connection is removed from pool -->
+       	<property name="c3p0.timeout">3000</property>
+       	
+       	<!-- A maximum of 50 prepared statements will be cached. Caching of prepared statements is essential for best performance with Hibernate -->
+       	<property name="c3p0.max_statements">50</property>
+       	
+       	<!-- This is the idle time in seconds before a connection is automatically validated. -->
+       	<property name="c3p0.idle_test_period">3000</property>
+       	
+       	<!-- Use the Hibernate hbm2ddl utility to create/update the table structure at run time.
+       		 The above utility is good and can be used at development time, in production application 
+       		 you must set the value to none. Use this utility carefully otherwise it will drop 
+       		 your existing tables along with the data.
+		<property name="hibernate.hbm2ddl.auto">none</property>
+		 -->
+		<!-- Drop and re-create the database schema on startup 
+       	<property name="hibernate.hbm2ddl.auto">create</property>
+       	-->
+       	
+       	<!-- When set to update, it will create the table, if table is not exists -->
+       	<property name="hibernate.hbm2ddl.auto">update</property>
+       	 
+       	 
+       	<!-- Echo all executed SQL to console -->
+       	<property name="show_sql">true</property>
+       	
+       	<!-- Format all SQL statements -->    
+        <property name="format_sql">true</property>
+        
+        <!-- Show comments for SQL statements -->  
+        <property name="use_sql_comments">true</property>
+        <!--  <mapping class="com.demo.model.User"/> -->
+         
+      </session-factory>
+</hibernate-configuration>
