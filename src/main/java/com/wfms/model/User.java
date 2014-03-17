@@ -49,7 +49,7 @@ public class User {
 	private String designation;
 	
 	@Embedded
-	private Address userAddress;
+	private Address address;
 	
 	@Embedded
 	private Contact contact;
@@ -149,20 +149,20 @@ public class User {
 		this.designation = designation;
 	}
 
-	public Address getUserAddress() {
-		return userAddress;
-	}
-
-	public void setUserAddress(Address userAddress) {
-		this.userAddress = userAddress;
-	}
-
 	public Contact getContact() {
 		return contact;
 	}
 
 	public void setContact(Contact contact) {
 		this.contact = contact;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
 }

@@ -40,19 +40,149 @@
 												}
 											}
 										});
-					});
 
-	$(function() {
-		$("#birthDate").datepicker({
-			changeMonth : true,
-			changeYear : true,
-			dateFormat : "dd-mm-yy",
-			minDate : "-780m +0w",
-			maxDate : "-144m +0w"
-		});
-	});
+						$(function() {
+							$("#birthDate").datepicker({
+								changeMonth : true,
+								changeYear : true,
+								dateFormat : "dd-mm-yy",
+								minDate : "-780m +0w",
+								maxDate : "-144m +0w"
+							});
+						});
+
+						$("#countryId")
+								.change(
+										function() {
+											countryId = $("#countryId").val();
+											if (!isNaN(countryId)
+													&& countryId != "") {
+												$
+														.ajax({
+															url : "./StateController?action=getStateList&countryId="
+																	+ countryId,
+															success : function(
+																	result) {
+																var x = document
+																		.getElementById("stateName");
+																x.length = 0;
+																var str = result
+																		.split(":");
+																var len = str.length - 1;
+																for (var i = 0; i < len; i++) {
+																	var option = document
+																			.createElement("option");
+																	option.text = str[i];
+																	option.value = str[i];
+																	try {
+																		x
+																				.add(
+																						option,
+																						x.options[null]);
+																	} catch (e) {
+																		x
+																				.add(
+																						option,
+																						null);
+																	}
+																}
+															}
+														});
+											}
+										});
+
+						$("#countryId")
+								.change(
+										function() {
+											countryId = $("#countryId").val();
+											if (!isNaN(countryId)
+													&& countryId != "") {
+												$
+														.ajax({
+															url : "./StateController?action=getStateList&countryId="
+																	+ countryId,
+															success : function(
+																	result) {
+																alert(result);
+																var x = document
+																		.getElementById("stateId");
+																x.length = 0;
+																var str = result
+																		.split(":");
+																var len = str.length - 1;
+																for (var i = 0; i < len; i++) {
+																	var option = document
+																			.createElement("option");
+																	option.value = str[i];
+																	i++;
+																	option.text = str[i];
+
+																	try {
+																		x
+																				.add(
+																						option,
+																						x.options[null]);
+																	} catch (e) {
+																		x
+																				.add(
+																						option,
+																						null);
+																	}
+																}
+															}
+														});
+											}
+										});
+
+						$("#stateId")
+								.change(
+										function() {
+											stateId = $("#stateId").val();
+											if (!isNaN(stateId)
+													&& stateId != "") {
+												$
+														.ajax({
+															url : "./CityController?action=getCityList&stateId="
+																	+ stateId,
+															success : function(
+																	result) {
+																alert(result);
+																var x = document
+																		.getElementById("cityId");
+																x.length = 0;
+																var str = result
+																		.split(":");
+																var len = str.length - 1;
+																for (var i = 0; i < len; i++) {
+																	var option = document
+																			.createElement("option");
+																	option.value = str[i];
+																	i++;
+																	option.text = str[i];
+
+																	try {
+																		x
+																				.add(
+																						option,
+																						x.options[null]);
+																	} catch (e) {
+																		x
+																				.add(
+																						option,
+																						null);
+																	}
+																}
+															}
+														});
+											}
+										});
+					});
 </script>
 <%@ include file="menu.jsp"%>
+<%
+	List<Country> countryList = (List<Country>) application
+			.getAttribute("activeCountryList");
+%>
 <%-- <%@ include file="check-permission.jsp" %> --%>
 <body>
 	<div id="wrapper">
@@ -65,7 +195,7 @@
 						</tr>
 					</table>
 					<form action="./UserController" name="add-user-forms"
-						id="add-user-forms" method="post">
+						id="add-user-form" method="post">
 						<input type="hidden" name="action" value="add" />
 						<table width="100%">
 							<tr>
@@ -92,9 +222,33 @@
 								</select></td>
 							</tr>
 							<tr>
-								<td class="bold">Email</td>
+								<td class="bold">Birth date</td>
 								<td><input id="birthDate" name="birthDate"
 									placeholder="enter birth date"></td>
+							</tr>
+							<tr>
+								<td class="bold" width="10%">Select Country</td>
+								<td><select name="countryId" id="countryId">
+										<option value="">select</option>
+										<%
+											for (Country country : countryList) {
+										%><option value="<%=country.getCountryId()%>"><%=country.getCountryName()%></option>
+										<%
+											}
+										%>
+								</select></td>
+							</tr>
+							<tr>
+								<td class="bold">State Name</td>
+								<td><select name="stateId" id="stateId">
+										<option value="">select</option>
+								</select></td>
+							</tr>
+							<tr>
+								<td class="bold">City Name</td>
+								<td><select name="cityId" id="cityId">
+										<option value="">select</option>
+								</select></td>
 							</tr>
 							<tr>
 								<td class="bold">Designation</td>

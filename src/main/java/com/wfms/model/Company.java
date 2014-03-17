@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,6 +22,9 @@ public class Company {
 	
 	@Column(name="COMPANY_NAME")
 	private String companyName;
+	
+	@Embedded
+	private Address address;
 	
 	@Column(name="STATUS")
 	private int status;
@@ -58,6 +62,14 @@ public class Company {
 
 	public void setProjects(Set<Project> projects) {
 		this.projects = projects;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 	
 	

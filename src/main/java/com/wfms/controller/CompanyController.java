@@ -1,6 +1,7 @@
 package com.wfms.controller;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -14,7 +15,10 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.wfms.dao.CompanyDao;
 import com.wfms.dao.impl.CompanyDaoImpl;
+import com.wfms.model.Address;
 import com.wfms.model.Company;
+import com.wfms.model.Contact;
+import com.wfms.model.User;
 import com.wfms.util.Constants;
 
 /**
@@ -48,9 +52,7 @@ public class CompanyController extends HttpServlet {
 		this.company = (Company) this.context.getBean("company");
 		
 		if(action.equals(Constants.ADD)){
-			final String companyName = request.getParameter("companyName");
-			this.company.setCompanyName(companyName);
-			this.company.setStatus(Constants.ACTIVE);
+			this.company = this.populateCompany(request);
 			this.companyDao.save(this.company);
 			
 			// Populating active company list
@@ -90,6 +92,22 @@ public class CompanyController extends HttpServlet {
 		doGet(request, response);
 	}
 
+	private Company populateCompany(HttpServletRequest request){
+		Company company = (Company) this.context.getBean("company");
+		Address address = (Address) this.context.getBean("address");
+		final String companyName = request.getParameter("companyName");
+		company.setCompanyName(companyName);
+		company.setStatus(Constants.ACTIVE);
+		
+		address.setStreet("street");
+		address.setCountry("india");
+		address.setState("gujarat");
+		address.setCity("ahmedabad");
+		address.setZipcode("zipcode");
+		company.setAddress(address);
+		
+		return company;
+	}
 }
 
 

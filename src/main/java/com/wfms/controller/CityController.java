@@ -1,6 +1,7 @@
 package com.wfms.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,11 +23,15 @@ import com.wfms.util.Constants;
 /**
  * Servlet implementation class Controller
  */
-@WebServlet("/pages/admin/CityController")
+@WebServlet("/CityController")
 public class CityController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
+	private State state = null;
+	
 	private StateDao stateDao = null;
+	
+	private City city = null;
 	
 	private CityDao cityDao = null;
 	
@@ -49,15 +54,29 @@ public class CityController extends HttpServlet {
 		this.cityDao = (CityDaoImpl) this.context.getBean("cityDao");
 		if(action.equals(Constants.ADD)){
 			final long stateId = Long.parseLong(request.getParameter("stateId"));
-			State state = this.stateDao.read(stateId);
+			this.state = this.stateDao.read(stateId);
 			final String cityName = request.getParameter("cityName");
-			City city = (City) this.context.getBean("city");
-			city.setCityName(cityName);
-			city.setState(state);
-			city.setStatus(Constants.ACTIVE);
-			this.cityDao.save(city);
-			response.sendRedirect(request.getContextPath() + "/save-successfully.jsp?entity=city");
+			this.city = (City) this.context.getBean("city");
+			this.city.setCityName(cityName);
+			this.city.setState(this.state);
+			this.city.setStatus(Constants.ACTIVE);
+			this.cityDao.save(this.city);
+			response.sendRedirect(request.getContextPath() + "/save-successfully.jsp?entity=City");
 		}else if(action.equals(Constants.DELETE)){
+		}else if(action.equals(Constants.GET_CITY_LIST)){
+			final long stateId = Long.parseLong(request.getParameter("stateId"));
+			PrintWriter out = response.getWriter();
+			this.state = this.stateDao.read(stateId);
+			StringBuffer sb = new StringBuffer();
+			sb.append(Constants.DOUBLE_QUOTE)
+				.append(Constants.COLLON)
+				.append(Constants.SELECT)
+				.append(Constants.COLLON);
+			for(City city : this.state.getCities()){
+				sb.append(city.getCityId()).append(Constants.COLLON)
+				.append(city.getCityName()).append(Constants.COLLON);
+			}
+			out.print(sb);
 		}
 	}
 

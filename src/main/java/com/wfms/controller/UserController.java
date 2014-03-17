@@ -3,7 +3,6 @@ package com.wfms.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
-import java.util.List;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
@@ -15,13 +14,19 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.wfms.dao.CityDao;
+import com.wfms.dao.CountryDao;
 import com.wfms.dao.MessageDao;
+import com.wfms.dao.StateDao;
 import com.wfms.dao.UserDao;
 import com.wfms.dao.impl.MessageDaoImpl;
 import com.wfms.dao.impl.UserDaoImpl;
 import com.wfms.model.Address;
+import com.wfms.model.City;
 import com.wfms.model.Contact;
+import com.wfms.model.Country;
 import com.wfms.model.Message;
+import com.wfms.model.State;
 import com.wfms.model.User;
 import com.wfms.util.Constants;
 
@@ -32,16 +37,10 @@ import com.wfms.util.Constants;
 public class UserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private Address address = null;
-
-	private Contact contact = null;
-
 	private User user = null;
-
+	
 	private UserDao userDao = null;
-
-	private List<User> userList = null;
-
+	
 	private Message message = null;
 
 	private MessageDao messageDao = null;
@@ -69,40 +68,10 @@ public class UserController extends HttpServlet {
 		this.userDao = (UserDaoImpl) this.context.getBean("userDao");
 		this.messageDao = (MessageDaoImpl) this.context.getBean("messageDao");
 		if (action.equals(Constants.ADD)) {
-			this.user = (User) this.context.getBean("user");
-			this.address = (Address) this.context.getBean("address");
-			this.contact = (Contact) this.context.getBean("contact");
-			
-			final String username = request.getParameter("username");
-			final String userType = request.getParameter("userType");
-			final String password = Constants.DEFAULT_PASSWORD;
-			final String firstName = request.getParameter("firstName");
-			final String lastName = request.getParameter("lastName");
-			final String email = username + Constants.AT
-					+ Constants.DOMAIN_NAME;
-			this.user.setUsername(username);
-			this.user.setPassword(password);
-			this.user.setFirstName(firstName);
-			this.user.setLastName(lastName);
-			this.user.setEmail(email);
-			this.user.setUserType(userType);
-			this.user.setRegistrationDate(new Date());
-			this.user.setStatus(Constants.ACTIVE);
-			
-			this.address.setStreet("street");
-			this.address.setCountry("india");
-			this.address.setState("gujarat");
-			this.address.setCity("ahmedabad");
-			this.address.setZipcode("zipcode");
-			this.user.setUserAddress(this.address);
-			
-			this.contact.setWebsite("website");
-			this.contact.setWorkPhone("working fone number");
-			this.user.setContact(this.contact);
-			
+			this.user = this.populateUser(request);
 			this.userDao.save(this.user);
 
-			// send message
+			// send welcome message
 			this.message = this.getWelcomeMessage(this.user);
 			this.messageDao.save(this.message);
 
@@ -113,11 +82,11 @@ public class UserController extends HttpServlet {
 			LOGGER.info("Checking whether username is available or not");
 			final String username = request.getParameter("username");
 			PrintWriter out = response.getWriter();
-			this.userList = this.userDao.userExists(username);
-			if (userList.size() == 0)
-				out.write("true");
+			final boolean isUserNameAvailable = this.userDao.isUserNameAvailable(username);
+			if (isUserNameAvailable)
+				out.write(Constants.TRUE);
 			else
-				out.write("false");
+				out.write(Constants.FALSE);
 		} else if (action.equals(Constants.CHANGE_PASSWORD)) {
 			// session base code needs to be added
 		}
@@ -160,5 +129,52 @@ public class UserController extends HttpServlet {
 				.append(Constants.COMMA).append(Constants.SINGLE_LINE_BREAK)
 				.append(Constants.SIGNATURE);
 		return messageContent.toString();
+	}
+	
+	private User populateUser(HttpServletRequest request){
+		User user = (User) this.context.getBean("user");
+		Address address = (Address) this.context.getBean("address");
+		Contact contact = (Contact) this.context.getBean("contact");
+		
+		final String username = request.getParameter("username");
+		final String userType = request.getParameter("userType");
+		final String password = Constants.DEFAULT_PASSWORD;
+		final String firstName = request.getParameter("firstName");
+		final String lastName = request.getParameter("lastName");
+		final String email = username + Constants.AT
+				+ Constants.DOMAIN_NAME;
+		
+		user.setUsername(username);
+		user.setPassword(password);
+		user.setFirstName(firstName);
+		user.setLastName(lastName);
+		user.setEmail(email);
+		user.setUserType(userType);
+		user.setRegistrationDate(new Date());
+		user.setStatus(Constants.ACTIVE);
+		
+		address.setStreet(request.getParameter("street"));
+		
+		final long countryId = Long.parseLong(request.getParameter("countryId"));
+		CountryDao countryDao = (CountryDao) this.context.getBean("countryDao");
+		address.setCountry(countryDao.getCountryName(countryId));
+		
+		final long stateId = Long.parseLong(request.getParameter("stateId"));
+		StateDao stateDao = (StateDao) this.context.getBean("stateDao");
+		address.setState(stateDao.getStateName(stateId));
+		
+		final long cityId = Long.parseLong(request.getParameter("cityId"));
+		CityDao cityDao = (CityDao) this.context.getBean("cityDao");
+		address.setCity(cityDao.getCityName(cityId));
+		
+		address.setZipcode(request.getParameter("zipcode"));
+		
+		user.setAddress(address);
+		
+		contact.setWebsite("website");
+		contact.setWorkPhone("working fone number");
+		user.setContact(contact);
+		
+		return user;
 	}
 }

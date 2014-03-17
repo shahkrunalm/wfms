@@ -2,7 +2,6 @@ package com.wfms.dao;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 
 public interface BaseDao<T, ID extends Serializable> {
 	 /** Persist the newInstance object into database */
@@ -19,5 +18,5 @@ public interface BaseDao<T, ID extends Serializable> {
     /** Remove an object from persistent storage in the database */
     void delete(T persistentObject);
     
-    List<T> getListByCriteria(T instance, String orderBy, int id);
+    List<T> getListByCriteria(T instance, final String orderBy, final int status);
 }

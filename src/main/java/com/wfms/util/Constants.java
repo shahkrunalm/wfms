@@ -19,6 +19,12 @@ public class Constants {
 	public final static String AT = "@";
 	public final static String DOMAIN_NAME = "wfms.com";
 	public final static String CHANGE_PASSWORD = "changePassword";
+	public final static String GET_STATE_LIST = "getStateList";
+	public final static String GET_CITY_LIST = "getCityList";
+	
+	public final static String TRUE = "true";
+	public final static String FALSE = "false";
+	
 	// constants for messages
 	public final static int READ = 1;
 	public final static int UNREAD = -1;
@@ -33,6 +39,8 @@ public class Constants {
 	public static final String HI = "Hi";
 	public static final String COMMA = ",";
 	public static final String COLLON = ":";
+	public static final String DOUBLE_QUOTE = "\"\"";
+	public static final String SELECT = "select";
 	public static final String THANKS = "Thanks";
 	public static final String SIGNATURE = "WFMS team";
 	public static final String USERNAME_PASSWORD_TEXT = "Please find below your username and password. Please update your password after first login.<BR><BR>";

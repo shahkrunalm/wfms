@@ -1,7 +1,9 @@
 package com.wfms.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -45,7 +47,8 @@ public class StateController extends HttpServlet {
     public StateController() {
         super();
     }
-
+	private static final Logger LOGGER = Logger.getLogger(StateController.class
+		      .getName());
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -54,6 +57,7 @@ public class StateController extends HttpServlet {
 		this.context = new ClassPathXmlApplicationContext("application-context.xml");
 		this.stateDao = (StateDaoImpl) this.context.getBean("stateDao");
 		this.countryDao = (CountryDaoImpl) this.context.getBean("countryDao");
+
 		if(action.equals(Constants.ADD)){
 			final long countryId = Long.parseLong(request.getParameter("countryId"));
 			final String stateName = request.getParameter("stateName");
@@ -76,6 +80,20 @@ public class StateController extends HttpServlet {
 			request.setAttribute("stateList", this.stateList);
 			request.getRequestDispatcher("view-state-list.jsp").forward(request, response);
 		}else if(action.equals(Constants.DELETE)){
+		}else if(action.equals(Constants.GET_STATE_LIST)){
+			final long countryId = Long.parseLong(request.getParameter("countryId"));
+			PrintWriter out = response.getWriter();
+			this.country = this.countryDao.read(countryId);
+			StringBuffer sb = new StringBuffer();
+			sb.append(Constants.DOUBLE_QUOTE)
+				.append(Constants.COLLON)
+				.append(Constants.SELECT)
+				.append(Constants.COLLON);
+			for(State state : this.country.getStates()){
+				sb.append(state.getStateId()).append(Constants.COLLON)
+				.append(state.getStateName()).append(Constants.COLLON);
+			}
+			out.print(sb);
 		}
 	}
 
