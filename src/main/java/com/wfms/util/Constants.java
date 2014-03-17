@@ -18,6 +18,7 @@ public class Constants {
 	public final static String DEFAULT_PASSWORD = "wfms@123";
 	public final static String AT = "@";
 	public final static String DOMAIN_NAME = "wfms.com";
+	public final static String CHANGE_PASSWORD = "changePassword";
 	// constants for messages
 	public final static int READ = 1;
 	public final static int UNREAD = -1;

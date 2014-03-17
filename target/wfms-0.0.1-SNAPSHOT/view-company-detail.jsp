@@ -57,7 +57,9 @@
 									%>
 									<tr>
 										<td align="center"><%=++i%></td>
-										<td><%=project.getProjectName()%></td>
+										<td><a
+								href="./ProjectController?action=detail&projectId=<%=project.getProjectId()%>"
+								title="click here to view project detail"><%=project.getProjectName()%></a></td>
 										<td align="center">view (<%=project.getStories().size()%>)</td>
 										<td align="center"><a href="add-task.jsp?storyId="
 											title="click here to add taks">add</td>

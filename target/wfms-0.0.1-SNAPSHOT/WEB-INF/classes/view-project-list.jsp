@@ -60,7 +60,9 @@
 							<td align="center"><a
 								href="./ProjectController?action=detail&projectId=<%=project.getProjectId()%>"
 								title="click here to view project detail"><%=project.getProjectName()%></a></td>
-							<td align="center"><%=project.getCompany().getCompanyName()%></td>
+							<td align="center"><a
+								href="./CompanyController?action=detail&companyId=<%=project.getCompany().getCompanyId()%>"
+								title="click here to view company detail"><%=project.getCompany().getCompanyName()%></a></td>
 							<td align="center"><a
 								href="./ProjectController?action=detail&projectId=<%=project.getProjectId()%>"
 								title="click here to view stories">view (<%=project.getStories().size()%>)</a></td>

@@ -76,6 +76,12 @@ public class TaskController extends HttpServlet {
 			request.setAttribute("projectList", this.taskList);
 			request.getRequestDispatcher("view-task-list.jsp").forward(request, response);
 		}else if(action.equals(Constants.DELETE)){
+		}else if(action.equals(Constants.DETAIL)){
+			final long taskId = Long.parseLong(request.getParameter("taskId"));
+			this.task = this.taskDao.read(taskId);
+			request.setAttribute("task", this.task);
+			request.getRequestDispatcher("view-task-detail.jsp").forward(request, response);
+
 		}
 	}
 

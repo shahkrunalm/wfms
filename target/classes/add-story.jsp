@@ -12,11 +12,11 @@
 		$("#add-story-form").validate({
 			errorClass : "my-error-class",
 			rules : {
-				projectId: "required",
+				projectId : "required",
 				storyName : "required"
 			},
 			messages : {
-				projectId: " please select project",
+				projectId : " please select project",
 				storyName : " please enter story name"
 			}
 		});
@@ -58,6 +58,11 @@
 								<td class="bold" width="15%">Story Name</td>
 								<td><input name="storyName" id="storyName"
 									placeholder="enter story name" /></td>
+							</tr>
+							<tr>
+								<td class="bold" width="15%">Description</td>
+								<td><input name="description" id="description"
+									placeholder="enter description" /></td>
 							</tr>
 							<tr>
 								<td>&nbsp;</td>

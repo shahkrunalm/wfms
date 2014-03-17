@@ -1,5 +1,6 @@
 package com.wfms.model;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,6 +27,12 @@ public class Story {
 	
 	@Column(name="STORY_SHORT_NAME")
 	private String storyShortName;
+	
+	@Column(name="DESCRIPTION")
+	private String description;
+	
+	@Column(name="CREATED_ON")
+	private Date createdOn;
 	
 	@OneToMany(mappedBy = "story")  
 	private Set<Task> tasks = new HashSet<Task>();
@@ -83,6 +90,22 @@ public class Story {
 
 	public void setProject(Project project) {
 		this.project = project;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Date getCreatedOn() {
+		return createdOn;
+	}
+
+	public void setCreatedOn(Date createdOn) {
+		this.createdOn = createdOn;
 	}
 	
 	

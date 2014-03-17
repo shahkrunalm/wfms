@@ -1,6 +1,7 @@
 package com.wfms.controller;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -57,10 +58,13 @@ public class StoryController extends HttpServlet {
 		if(action.equals(Constants.ADD)){
 			final long projectId = Long.parseLong(request.getParameter("projectId"));
 			final String storyName = request.getParameter("storyName");
+			final String description = request.getParameter("description");
 			this.project = this.projectDao.read(projectId);
 			this.story = (Story) this.context.getBean("story");
 			this.story.setStoryName(storyName);
+			this.story.setDescription(description);
 			this.story.setProject(this.project);
+			this.story.setCreatedOn(new Date());
 			this.story.setStatus(Constants.ACTIVE);
 			this.storyDao.save(this.story);
 			response.sendRedirect(request.getContextPath() + "/save-successfully.jsp?entity=Story");
@@ -76,6 +80,11 @@ public class StoryController extends HttpServlet {
 			request.setAttribute("storyList", this.storyList);
 			request.getRequestDispatcher("view-story-list.jsp").forward(request, response);
 		}else if(action.equals(Constants.DELETE)){
+		}else if(action.equals(Constants.DETAIL)){
+			final long storyId = Long.parseLong(request.getParameter("storyId"));
+			this.story = this.storyDao.read(storyId);
+			request.setAttribute("story", this.story);
+			request.getRequestDispatcher("view-story-detail.jsp").forward(request, response);
 		}
 	}
 

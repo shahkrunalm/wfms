@@ -38,10 +38,17 @@
 						<tr>
 							<td width="15%" class="bold">Stories</td>
 							<td>
-							<%if(project.getStories().size()==0){ %><div class="red">No record found</div> <%} %>
+								<%
+									if (project.getStories().size() == 0) {
+								%><div class="red">No
+									record found</div> <%
+ 	}
+ %>
 							</td>
 						</tr>
-						<%if(project.getStories().size()>0){ %>
+						<%
+							if (project.getStories().size() > 0) {
+						%>
 						<tr>
 							<td colspan="2">
 								<table border="0" width="100%">
@@ -57,13 +64,17 @@
 
 									<%
 										int i = 0;
-											for (Story story : project.getStories()) {
+												for (Story story : project.getStories()) {
 									%>
 									<tr>
 										<td align="center"><%=++i%></td>
-										<td><%=story.getStoryName()%></td>
-										<td align="center">view (<%=story.getTasks().size()%>)</td>
-										<td align="center"><a href="add-task.jsp?storyId=<%=story.getStoryId() %>"
+										<td><a
+											href="./StoryController?action=detail&storyId=<%=story.getStoryId()%>"
+											title="click here to view story detail"><%=story.getStoryName()%></a></td>
+										<td align="center">view (<%=story.getTasks().size()%>)
+										</td>
+										<td align="center"><a
+											href="add-task.jsp?storyId=<%=story.getStoryId()%>"
 											title="click here to add taks">add</td>
 										<td align="center">edit</td>
 										<td align="center">delete</td>
@@ -75,7 +86,9 @@
 								</table>
 							</td>
 						</tr>
-						<%} %>
+						<%
+							}
+						%>
 					</table>
 					<%
 						} else

@@ -97,6 +97,8 @@ public class UserController extends HttpServlet {
 				out.write("true");
 			else
 				out.write("false");
+		} else if(action.equals(Constants.CHANGE_PASSWORD)){
+			// session base code needs to be added
 		}
 	}
 

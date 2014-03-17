@@ -57,7 +57,9 @@
 						%>
 						<tr>
 							<td align="center"><%=++i%></td>
-							<td align="center"><%=company.getCompanyName()%></td>
+							<td align="center"><a
+								href="./CompanyController?action=detail&companyId=<%=company.getCompanyId()%>"
+								title="click here to view company detail"><%=company.getCompanyName()%></a></td>
 							<td align="center"><%=company.getProjects().size()%></td>
 							<td align="center">edit</td>
 							<td align="center">delete</td>

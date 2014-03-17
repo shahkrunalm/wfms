@@ -15,7 +15,7 @@
 				<div id="inner_content">
 					<div class="box">
 						User: <a href="add-user.jsp" title="click here to add user">add</a>
-						| <a href="./CountryController?action=view"
+						| <a href="./UserController?action=view"
 							title="click here to view user list">view</a>
 					</div>
 				</div>
