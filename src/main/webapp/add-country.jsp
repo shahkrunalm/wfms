@@ -10,12 +10,29 @@
 <script type="text/javascript">
 	$().ready(function() {
 		$("#add-country-form").validate({
+			
 			errorClass : "my-error-class",
 			rules : {
-				countryName : "required"
+					countryName : {
+						required : true, 
+						remote : {
+							url : "./CountryController?action=countryExists",
+							type : "get",
+							data : {
+								countryName : function() {
+									return $(
+											"#countryName")
+											.val();
+								}
+							}
+						}
+					}
 			},
 			messages : {
-				countryName : " please enter country name"
+						countryName : {
+						remote : jQuery.validator
+								.format(" countryname already exists.")
+					}
 			}
 		});
 	});
@@ -38,7 +55,7 @@
 						<table width="100%">
 							<tr>
 								<td class="bold" width="15%">Country Name</td>
-								<td><input name="countryName" placeholder="enter country name"></td>
+								<td><input name="countryName" id="countryName" placeholder="enter country name"/></td>
 							</tr>
 							<tr>
 								<td>&nbsp;</td>

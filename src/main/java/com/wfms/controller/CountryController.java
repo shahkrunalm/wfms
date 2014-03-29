@@ -1,8 +1,10 @@
 package com.wfms.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -39,7 +41,9 @@ public class CountryController extends HttpServlet {
 	private ApplicationContext context = null;
        
 	private List<Country> countryList = null;
-    /**
+	private static final Logger LOGGER = Logger.getLogger(CountryController.class
+			.getName());
+	/**
      * @see HttpServlet#HttpServlet()
      */
     public CountryController() {
@@ -81,7 +85,17 @@ public class CountryController extends HttpServlet {
 			final long countryId = Long.parseLong(request.getParameter("countryId"));
 			Country country = this.countryDao.read(countryId);
 			this.countryDao.delete(country);
-		}else{
+		}else if (action.equals(Constants.COUNTRY_EXISTS)) {
+			LOGGER.info("Checking whether countryname is available or not");
+			final String countryname = request.getParameter("countryName");
+			PrintWriter out = response.getWriter();
+			final boolean isCountryNameAvailable = this.countryDao.isCountryNameAvailable(countryname);
+			if (isCountryNameAvailable)
+				out.write(Constants.TRUE);
+			else
+				out.write(Constants.FALSE);
+		}
+		else{
 			
 		}
 	}

@@ -84,7 +84,7 @@ public class StateController extends HttpServlet {
 			final long countryId = Long.parseLong(request.getParameter("countryId"));
 			PrintWriter out = response.getWriter();
 			this.country = this.countryDao.read(countryId);
-			StringBuffer sb = new StringBuffer();
+			StringBuilder sb = new StringBuilder();
 			sb.append(Constants.DOUBLE_QUOTE)
 				.append(Constants.COLLON)
 				.append(Constants.SELECT)

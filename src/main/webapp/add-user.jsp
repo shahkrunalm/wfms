@@ -12,11 +12,15 @@
 			.ready(
 					function() {
 						$("#add-user-form")
+						
+						
 								.validate(
 										{
 											errorClass : "my-error-class",
 											rules : {
 												firstName : "required",
+												countryId: "required",
+												stateId: "required",
 												username : {
 													required : true,
 													minlength : 5,
@@ -34,6 +38,7 @@
 												}
 											},
 											messages : {
+												countryId: " please select country",
 												username : {
 													remote : jQuery.validator
 															.format(" someone already has that username, please try another")

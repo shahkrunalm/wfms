@@ -24,7 +24,7 @@ public class Constants {
 	
 	public final static String TRUE = "true";
 	public final static String FALSE = "false";
-	
+	public final static String COUNTRY_EXISTS = "countryExists";
 	// constants for messages
 	public final static int READ = 1;
 	public final static int UNREAD = -1;
