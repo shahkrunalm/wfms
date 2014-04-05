@@ -25,7 +25,7 @@
 													required : true,
 													minlength : 5,
 													remote : {
-														url : "./UserController?action=userExists",
+														url : "./UserController?action=exists",
 														type : "get",
 														data : {
 															username : function() {

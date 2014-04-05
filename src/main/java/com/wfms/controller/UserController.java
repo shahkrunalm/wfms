@@ -45,10 +45,12 @@ public class UserController extends HttpServlet {
 
 	private MessageDao messageDao = null;
 
+	private PrintWriter out = null;
+	
 	private static final Logger LOGGER = Logger.getLogger(UserController.class
 			.getName());
 
-	ApplicationContext context = null;
+	private ApplicationContext context = null;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -78,15 +80,16 @@ public class UserController extends HttpServlet {
 			response.sendRedirect(request.getContextPath()
 					+ "/save-successfully.jsp?entity=User");
 		} else if (action.equals(Constants.DELETE)) {
-		} else if (action.equals(Constants.USER_EXISTS)) {
+		} else if (action.equals(Constants.EXISTS)) {
 			LOGGER.info("Checking whether username is available or not");
 			final String username = request.getParameter("username");
-			PrintWriter out = response.getWriter();
-			final boolean isUserNameAvailable = this.userDao.isUserNameAvailable(username);
+			this.user = (User) this.context.getBean("user");
+			this.out = response.getWriter();
+			final boolean isUserNameAvailable = this.userDao.isExists(this.user, "username", username);
 			if (isUserNameAvailable)
-				out.write(Constants.TRUE);
+				this.out.write(Constants.TRUE);
 			else
-				out.write(Constants.FALSE);
+				this.out.write(Constants.FALSE);
 		} else if (action.equals(Constants.CHANGE_PASSWORD)) {
 			// session base code needs to be added
 		}

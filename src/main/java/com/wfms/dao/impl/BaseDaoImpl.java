@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -13,14 +14,19 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.wfms.controller.CountryController;
 import com.wfms.dao.BaseDao;
 import com.wfms.hibernate.HibernateUtil;
+import com.wfms.model.User;
 
 public class BaseDaoImpl<T, ID extends Serializable> implements BaseDao<T, ID> {
 
 	private Class<T> type;
 
 	private SessionFactory sessionFactory;
+	
+	private static final Logger LOGGER = Logger.getLogger(BaseDaoImpl.class
+			.getName());
 
 	public BaseDaoImpl(final Class<T> type) {
 		super();
@@ -43,6 +49,7 @@ public class BaseDaoImpl<T, ID extends Serializable> implements BaseDao<T, ID> {
 			tx = session.beginTransaction();
 			savedEntity = (T) session.save(entity);
 			tx.commit();
+			session.close();
 		} catch (Exception e) {
 
 		}
@@ -57,6 +64,7 @@ public class BaseDaoImpl<T, ID extends Serializable> implements BaseDao<T, ID> {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			entity = (T) session.get(this.type, id);
+			session.close();
 		} catch (Exception e) {
 
 		}
@@ -64,9 +72,18 @@ public class BaseDaoImpl<T, ID extends Serializable> implements BaseDao<T, ID> {
 	}
 
 	@Override
-	public void update(T transientObject) {
-		// TODO Auto-generated method stub
-
+	public void update(T entity) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			session.update(entity);
+			tx.commit();
+			session.close();
+			LOGGER.info("Entity updated successfully");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -77,6 +94,7 @@ public class BaseDaoImpl<T, ID extends Serializable> implements BaseDao<T, ID> {
 			tx = session.beginTransaction();
 			session.delete(entity);
 			tx.commit();
+			session.close();
 		} catch (Exception e) {
 
 		}
@@ -101,6 +119,18 @@ public class BaseDaoImpl<T, ID extends Serializable> implements BaseDao<T, ID> {
 		if (orderBy != null)
 			criteria.addOrder(Order.asc(orderBy));
 		return criteria.list();
+	}
+
+	@Override
+	public boolean isExists(final T instance, final String propertyName,
+			final String propertyValue) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Criteria criteria = session.createCriteria(this.type);
+		criteria.add(Restrictions.eq(propertyName, propertyValue));
+		if (criteria.list().size() == 0)
+			return true;
+		else
+			return false;
 	}
 
 }

@@ -2,7 +2,6 @@ package com.wfms.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -12,19 +11,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.wfms.dao.CountryDao;
-import com.wfms.dao.StateDao;
 import com.wfms.dao.impl.CountryDaoImpl;
-import com.wfms.dao.impl.StateDaoImpl;
-import com.wfms.hibernate.HibernateUtil;
 import com.wfms.model.Country;
-import com.wfms.model.State;
 import com.wfms.util.Constants;
 
 /**
@@ -41,6 +33,9 @@ public class CountryController extends HttpServlet {
 	private ApplicationContext context = null;
        
 	private List<Country> countryList = null;
+	
+	private PrintWriter out = null;
+	
 	private static final Logger LOGGER = Logger.getLogger(CountryController.class
 			.getName());
 	/**
@@ -81,15 +76,34 @@ public class CountryController extends HttpServlet {
 			}
 			request.setAttribute("countryList", this.countryList);
 			request.getRequestDispatcher("view-country-list.jsp").forward(request, response);
+		}else if(action.equals(Constants.EDIT)){
+			final long countryId = Long.parseLong(request.getParameter("countryId"));
+			this.country = this.countryDao.read(countryId);
+			request.setAttribute("country", this.country);
+			request.getRequestDispatcher("edit-country.jsp").forward(request, response);
+		}else if(action.equals(Constants.UPDATE)){
+			LOGGER.info("Updating country details");
+			final long countryId = Long.parseLong(request.getParameter("countryId"));
+			final String countryName = request.getParameter("countryName");
+			LOGGER.info("country name is " + countryName);
+			this.country = this.countryDao.read(countryId);
+			this.country.setCountryName(countryName);
+			this.countryDao.update(this.country);
+			
+			// Populating active country list
+			getServletContext().setAttribute("activeCountryList", this.countryDao.getListByCriteria(this.country, "countryName", 1));
+			
+			response.sendRedirect(request.getContextPath() + "/update-successfully.jsp?entity=Country");
 		}else if(action.equals(Constants.DELETE)){
 			final long countryId = Long.parseLong(request.getParameter("countryId"));
-			Country country = this.countryDao.read(countryId);
-			this.countryDao.delete(country);
-		}else if (action.equals(Constants.COUNTRY_EXISTS)) {
+			this.country = this.countryDao.read(countryId);
+			this.countryDao.delete(this.country);
+		}else if (action.equals(Constants.EXISTS)) {
 			LOGGER.info("Checking whether countryname is available or not");
 			final String countryname = request.getParameter("countryName");
-			PrintWriter out = response.getWriter();
-			final boolean isCountryNameAvailable = this.countryDao.isCountryNameAvailable(countryname);
+			this.country = (Country) this.context.getBean("country");
+			this.out = response.getWriter();
+			final boolean isCountryNameAvailable = this.countryDao.isExists(this.country, "countryName", countryname);
 			if (isCountryNameAvailable)
 				out.write(Constants.TRUE);
 			else

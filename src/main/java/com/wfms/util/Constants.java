@@ -11,7 +11,7 @@ public class Constants {
 	public final static int ACTIVE = 1;
 	public final static int DEACTIVE = 0;
 	public final static String COMPOSE = "compose";
-	public final static String USER_EXISTS = "userExists";
+	public final static String EXISTS = "exists";
 	public final static String ADMIN = "admin";
 	public final static String USERNAME = "username";
 	public final static String PASSWORD = "password";
