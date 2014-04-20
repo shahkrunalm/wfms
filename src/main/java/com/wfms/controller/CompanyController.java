@@ -1,7 +1,6 @@
 package com.wfms.controller;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -13,12 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.wfms.dao.CityDao;
 import com.wfms.dao.CompanyDao;
+import com.wfms.dao.CountryDao;
+import com.wfms.dao.StateDao;
 import com.wfms.dao.impl.CompanyDaoImpl;
 import com.wfms.model.Address;
 import com.wfms.model.Company;
 import com.wfms.model.Contact;
-import com.wfms.model.User;
 import com.wfms.util.Constants;
 
 /**
@@ -95,17 +96,39 @@ public class CompanyController extends HttpServlet {
 	private Company populateCompany(HttpServletRequest request){
 		Company company = (Company) this.context.getBean("company");
 		Address address = (Address) this.context.getBean("address");
-		final String companyName = request.getParameter("companyName");
-		company.setCompanyName(companyName);
+		Contact contact = (Contact) this.context.getBean("contact");
+		
+		company.setCompanyName(request.getParameter("companyName"));
+		
 		company.setStatus(Constants.ACTIVE);
 		
-		address.setStreet("street");
-		address.setCountry("india");
-		address.setState("gujarat");
-		address.setCity("ahmedabad");
-		address.setZipcode("zipcode");
+		address.setStreet(request.getParameter("street"));
+		
+		final long countryId = Long.parseLong(request.getParameter("countryId"));
+		CountryDao countryDao = (CountryDao) this.context.getBean("countryDao");
+		address.setCountry(countryDao.getCountryName(countryId));
+		
+		final long stateId = Long.parseLong(request.getParameter("stateId"));
+		StateDao stateDao = (StateDao) this.context.getBean("stateDao");
+		address.setState(stateDao.getStateName(stateId));
+		
+		final long cityId = Long.parseLong(request.getParameter("cityId"));
+		CityDao cityDao = (CityDao) this.context.getBean("cityDao");
+		address.setCity(cityDao.getCityName(cityId));
+		
+		address.setZipcode(request.getParameter("zipcode"));
+		
 		company.setAddress(address);
 		
+		contact.setEmergencyContactName(request.getParameter("emergencyContactName"));
+		
+		contact.setWebsite(request.getParameter("website"));
+		
+		contact.setPersonalEmail(request.getParameter("personalEmail"));
+		
+		contact.setWorkPhone(request.getParameter("workPhone"));
+		
+		company.setContact(contact);
 		return company;
 	}
 }

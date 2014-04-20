@@ -57,12 +57,12 @@ public class StateController extends HttpServlet {
 		this.context = new ClassPathXmlApplicationContext("application-context.xml");
 		this.stateDao = (StateDaoImpl) this.context.getBean("stateDao");
 		this.countryDao = (CountryDaoImpl) this.context.getBean("countryDao");
-
+		this.country = (Country) this.context.getBean("country");
+		this.state = (State) this.context.getBean("state");
 		if(action.equals(Constants.ADD)){
 			final long countryId = Long.parseLong(request.getParameter("countryId"));
 			final String stateName = request.getParameter("stateName");
 			this.country = this.countryDao.read(countryId);
-			this.state = (State) this.context.getBean("state");
 			this.state.setCountry(country);
 			this.state.setStateName(stateName);
 			this.state.setStatus(Constants.ACTIVE);

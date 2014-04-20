@@ -28,12 +28,36 @@
 							if (project != null) {
 						%>
 						<tr>
+							<td width="15%" class="bold">Company Name</td>
+							<td><%=project.getCompany().getCompanyName()%></td>
+						</tr>
+						<tr>
 							<td width="15%" class="bold">Project Name</td>
 							<td><%=project.getProjectName()%></td>
 						</tr>
 						<tr>
-							<td width="15%" class="bold">Company Name</td>
-							<td><%=project.getCompany().getCompanyName()%></td>
+							<td width="15%" class="bold">Project Short Name</td>
+							<td><%=project.getProjectShortName()%></td>
+						</tr>
+						<tr>
+							<td width="15%" class="bold">Description</td>
+							<td><%=project.getProjectDescription()%></td>
+						</tr>
+						<tr>
+							<td width="15%" class="bold">Delivery Manager</td>
+							<td><%=project.getDeliveryManager().getFirstName()%> <%=project.getDeliveryManager().getLastName()%></td>
+						</tr>
+						<tr>
+							<td width="15%" class="bold">Project Manager</td>
+							<td><%=project.getProjectManager().getFirstName()%> <%=project.getProjectManager().getLastName()%></td>
+						</tr>
+						<tr>
+							<td width="15%" class="bold">Start Date</td>
+							<td><%=com.wfms.util.Utility.getOnlyDate(project.getExpectedStartDate())%></td>
+						</tr>
+						<tr>
+							<td width="15%" class="bold">End Date</td>
+							<td><%=com.wfms.util.Utility.getOnlyDate(project.getExpectedEndDate())%></td>
 						</tr>
 						<tr>
 							<td width="15%" class="bold">Stories</td>

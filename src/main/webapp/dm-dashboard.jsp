@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Admin dashboard - wfms</title>
+<title>Delivery Manager dashboard - wfms</title>
 </head>
 <%@ include file="header.jsp"%>
 <body>

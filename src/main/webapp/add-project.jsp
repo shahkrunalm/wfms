@@ -20,6 +20,26 @@
 				projectName : " please enter project name"
 			}
 		});
+		
+		$(function() {
+			$("#startDate").datepicker({
+				changeMonth : true,
+				changeYear : true,
+				dateFormat : "dd-mm-yy",
+				minDate : "-780m +0w",
+				maxDate : "-144m +0w"
+			});
+		});
+		
+		$(function() {
+			$("#endDate").datepicker({
+				changeMonth : true,
+				changeYear : true,
+				dateFormat : "dd-mm-yy",
+				minDate : "-780m +0w",
+				maxDate : "-144m +0w"
+			});
+		});
 	});
 </script>
 <body>
@@ -27,6 +47,12 @@
 	<%
 		List<Company> companyList = (List<Company>) application
 				.getAttribute("activeCompanyList");
+	
+		List<User> dmList = (List<User>) application
+				.getAttribute("activeDMList");
+	
+		List<User> pmList = (List<User>) application
+				.getAttribute("activePMList");
 	%>
 	<%-- <%@ include file="check-permission.jsp" %> --%>
 	<div id="wrapper">
@@ -58,6 +84,52 @@
 								<td class="bold" width="15%">Project Name</td>
 								<td><input name="projectName" id="projectName"
 									placeholder="enter project name" /></td>
+							</tr>
+							<tr>
+								<td class="bold" width="15%">Project Short Name</td>
+								<td><input name="projectShortName" id="projectShortName"
+									placeholder="enter project short name" /></td>
+							</tr>
+							<tr>
+								<td class="bold" width="15%">Description</td>
+								<td><input name="projectDescription" id="projectDescription"
+									placeholder="enter project description" /></td>
+							</tr>
+							<tr>
+								<td class="bold" width="15%">Expected Start Date</td>
+								<td><input name="startDate" id="startDate"
+									placeholder="enter start date" /></td>
+							</tr>
+							<tr>
+								<td class="bold" width="15%">Expected End Date</td>
+								<td><input name="endDate" id="endDate"
+									placeholder="enter end date" /></td>
+							</tr>
+							<tr>
+								<td class="bold" width="10%">Delivery Manager</td>
+								<td>
+									<select name="dmUserId" id="dmUserId">
+										<%
+											for (User user : dmList) {
+										%><option value="<%=user.getUserId()%>"><%=user.getFirstName()%> <%=user.getLastName()%> (<%=user.getUsername()%>)</option>
+										<%
+											}
+										%>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="bold" width="10%">Project Manager</td>
+								<td>
+									<select name="pmUserId" id="pmUserId">
+										<%
+											for (User user : pmList) {
+										%><option value="<%=user.getUserId()%>"><%=user.getFirstName()%> <%=user.getLastName()%> (<%=user.getUsername()%>)</option>
+										<%
+											}
+										%>
+									</select>
+								</td>
 							</tr>
 							<tr>
 								<td>&nbsp;</td>

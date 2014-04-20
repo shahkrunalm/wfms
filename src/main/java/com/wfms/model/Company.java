@@ -26,6 +26,9 @@ public class Company {
 	@Embedded
 	private Address address;
 	
+	@Embedded
+	private Contact contact;
+	
 	@Column(name="STATUS")
 	private int status;
 	
@@ -70,6 +73,14 @@ public class Company {
 
 	public void setAddress(Address address) {
 		this.address = address;
+	}
+
+	public Contact getContact() {
+		return contact;
+	}
+
+	public void setContact(Contact contact) {
+		this.contact = contact;
 	}
 	
 	

@@ -32,6 +32,30 @@
 							<td><%=company.getCompanyName()%></td>
 						</tr>
 						<tr>
+							<td width="15%" class="bold">Address</td>
+							<td><%=company.getAddress().getStreet()%>, 
+								<%=company.getAddress().getCity()%>, 
+								<%=company.getAddress().getState()%>,
+								<%=company.getAddress().getCountry()%> - <%=company.getAddress().getZipcode()%>
+							</td>
+						</tr>
+						<tr>
+							<td width="15%" class="bold">Contact Name</td>
+							<td><%=company.getContact().getEmergencyContactName()%></td>
+						</tr>
+						<tr>
+							<td width="15%" class="bold">Work Phone</td>
+							<td><%=company.getContact().getWorkPhone()%></td>
+						</tr>
+						<tr>
+							<td width="15%" class="bold">Website</td>
+							<td><%=company.getContact().getWebsite()%></td>
+						</tr>
+						<tr>
+							<td width="15%" class="bold">Email</td>
+							<td><%=company.getContact().getPersonalEmail()%></td>
+						</tr>
+						<tr>
 							<td width="15%" class="bold">Project</td>
 							<td>
 							<%if(company.getProjects().size()==0){ %><div class="red">No record found</div> <%} %>

@@ -2,6 +2,7 @@ package com.wfms.util;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 public class Utility {
 	public static Date convertToSQLDate(String str) {
 		Date date = null;
@@ -14,5 +15,10 @@ public class Utility {
 			e.printStackTrace();
 		}
 		return date;
+	}
+	
+	public static String getOnlyDate(Date date){
+		SimpleDateFormat sd = new SimpleDateFormat("dd-MM-yyyy");
+		return sd.format(date);
 	}
 }

@@ -8,6 +8,7 @@ public class Constants {
 	public final static String VIEW = "view";
 	public final static String ACTION = "action";
 	public final static String DETAIL = "detail";
+	public final static String LOGIN = "login";
 	public final static int ACTIVE = 1;
 	public final static int DEACTIVE = 0;
 	public final static String COMPOSE = "compose";
@@ -21,7 +22,7 @@ public class Constants {
 	public final static String CHANGE_PASSWORD = "changePassword";
 	public final static String GET_STATE_LIST = "getStateList";
 	public final static String GET_CITY_LIST = "getCityList";
-	
+	public final static String CHANGE_STATUS = "changeStatus";
 	public final static String TRUE = "true";
 	public final static String FALSE = "false";
 	public final static String COUNTRY_EXISTS = "countryExists";

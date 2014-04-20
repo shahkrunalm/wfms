@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -19,7 +21,7 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "USER_ID", unique = true)
-	private int userId;
+	private long userId;
 
 	@Column(name = "USER_NAME", unique = true, nullable = false)
 	private String username;
@@ -45,9 +47,13 @@ public class User {
 	@Column(name = "USER_TYPE")
 	private String userType;
 
-	@Column(name = "DESIGNATION")
-	private String designation;
+	@Column(name = "BIRTH_DATE")
+	private Date birthDate;
 	
+	@ManyToOne
+	@JoinColumn(name = "DESIGNATION_ID")  
+	private Designation designation;
+
 	@Embedded
 	private Address address;
 	
@@ -56,14 +62,9 @@ public class User {
 
 	@Column(name = "STATUS")
 	private int status;
-
-	public int getUserId() {
-		return userId;
-	}
-
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
+	
+	@Column(name = "GENDER")
+	private String gender;
 
 	public String getUsername() {
 		return username;
@@ -141,14 +142,6 @@ public class User {
 		this.userType = userType;
 	}
 
-	public String getDesignation() {
-		return designation;
-	}
-
-	public void setDesignation(String designation) {
-		this.designation = designation;
-	}
-
 	public Contact getContact() {
 		return contact;
 	}
@@ -164,5 +157,45 @@ public class User {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
+
+	public Designation getDesignation() {
+		return designation;
+	}
+
+	public void setDesignation(Designation designation) {
+		this.designation = designation;
+	}
+
+	public Date getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
+	}
+
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", username=" + username
+				+ ", userType=" + userType + ", designation=" + designation
+				+ "]";
+	}
+
 
 }

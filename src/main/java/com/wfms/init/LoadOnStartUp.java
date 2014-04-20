@@ -14,16 +14,22 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.wfms.dao.CompanyDao;
 import com.wfms.dao.CountryDao;
+import com.wfms.dao.DesignationDao;
 import com.wfms.dao.ProjectDao;
 import com.wfms.dao.StoryDao;
+import com.wfms.dao.UserDao;
 import com.wfms.dao.impl.CompanyDaoImpl;
 import com.wfms.dao.impl.CountryDaoImpl;
+import com.wfms.dao.impl.DesignationDaoImpl;
 import com.wfms.dao.impl.ProjectDaoImpl;
 import com.wfms.dao.impl.StoryDaoImpl;
+import com.wfms.dao.impl.UserDaoImpl;
 import com.wfms.model.Company;
 import com.wfms.model.Country;
+import com.wfms.model.Designation;
 import com.wfms.model.Project;
 import com.wfms.model.Story;
+import com.wfms.model.User;
 
 /**
  * Servlet implementation class LoadOnStartUp
@@ -51,6 +57,14 @@ public class LoadOnStartUp extends HttpServlet {
 	private Story story = null;
 	
 	private StoryDao storyDao = null;
+	
+	private Designation designation  = null;
+	
+	private DesignationDao designationDao = null;
+	
+	private User user = null;
+	
+	private UserDao userDao = null;
 	
 	ApplicationContext context = null;
 
@@ -94,7 +108,26 @@ public class LoadOnStartUp extends HttpServlet {
 		getServletContext().setAttribute("activeStoryList",
 				this.storyDao.getListByCriteria(this.story, "storyName", 1));
 
-
+		this.designationDao = (DesignationDaoImpl) this.context.getBean("designationDao");
+		
+		this.story = (Story) this.context.getBean("story");
+		
+		// populating active story list
+		getServletContext().setAttribute("activeDesignationList",
+				this.designationDao.getListByCriteria(this.designation, "designationName", 1));
+		
+		this.userDao = (UserDaoImpl) this.context.getBean("userDao");
+		
+		this.user = (User) this.context.getBean("user");
+		
+		
+		// populating active delivery manager list
+		getServletContext().setAttribute("activeDMList",
+				this.userDao.getUserListByDesignation(1));
+		
+		// populating active project manager list
+		getServletContext().setAttribute("activePMList",
+				this.userDao.getUserListByDesignation(3));
 	}
 
 	/**

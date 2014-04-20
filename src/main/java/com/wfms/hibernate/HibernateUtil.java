@@ -17,6 +17,7 @@ public class HibernateUtil {
 					.addAnnotatedClass(com.wfms.model.Project.class)
 					.addAnnotatedClass(com.wfms.model.Story.class)
 					.addAnnotatedClass(com.wfms.model.Task.class)
+					.addAnnotatedClass(com.wfms.model.Designation.class)
 					.configure()
 					.buildSessionFactory();
 		} catch (Throwable ex) {

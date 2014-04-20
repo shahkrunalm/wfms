@@ -16,6 +16,7 @@
 	<bean id="project" class="com.wfms.model.Project" />
 	<bean id="story" class="com.wfms.model.Story" />
 	<bean id="task" class="com.wfms.model.Task" />
+	<bean id="designation" class="com.wfms.model.Designation" />
 	
 	<bean id="countryDao" class="com.wfms.dao.impl.CountryDaoImpl" />
 	<bean id="stateDao" class="com.wfms.dao.impl.StateDaoImpl" />
@@ -26,6 +27,7 @@
 	<bean id="projectDao" class="com.wfms.dao.impl.ProjectDaoImpl" />
 	<bean id="storyDao" class="com.wfms.dao.impl.StoryDaoImpl" />
 	<bean id="taskDao" class="com.wfms.dao.impl.TaskDaoImpl" />
+	<bean id="designationDao" class="com.wfms.dao.impl.DesignationDaoImpl" />
 	<!-- 
 	<bean id="baseDao" class="com.wfms.dao.impl.BaseDaoImpl" >
 		<property name="sessionFactory"></property>

@@ -66,14 +66,8 @@ public class CountryController extends HttpServlet {
 			
 			response.sendRedirect(request.getContextPath() + "/save-successfully.jsp?entity=Country");
 		}else if(action.equals(Constants.VIEW)){
-			int id = -1;
 			final String status = request.getParameter("status");
-			if(status!=null){
-				id = Integer.parseInt(status);
-				this.countryList = this.countryDao.getListByCriteria(this.country, "countryName", id);
-			}else{
-				this.countryList = this.countryDao.getListByCriteria(this.country, "countryName", id);
-			}
+			this.countryList = this.countryDao.getListByCriteria(this.country, "countryName", Integer.parseInt(status));
 			request.setAttribute("countryList", this.countryList);
 			request.getRequestDispatcher("view-country-list.jsp").forward(request, response);
 		}else if(action.equals(Constants.EDIT)){
@@ -98,6 +92,10 @@ public class CountryController extends HttpServlet {
 			final long countryId = Long.parseLong(request.getParameter("countryId"));
 			this.country = this.countryDao.read(countryId);
 			this.countryDao.delete(this.country);
+			final String status = request.getParameter("status");
+			this.countryList = this.countryDao.getListByCriteria(this.country, "countryName", Integer.parseInt(status));
+			request.setAttribute("countryList", this.countryList);
+			request.getRequestDispatcher("view-country-list.jsp").forward(request, response);
 		}else if (action.equals(Constants.EXISTS)) {
 			LOGGER.info("Checking whether countryname is available or not");
 			final String countryname = request.getParameter("countryName");
@@ -109,7 +107,20 @@ public class CountryController extends HttpServlet {
 			else
 				out.write(Constants.FALSE);
 		}
-		else{
+		else if(action.equals(Constants.CHANGE_STATUS)){
+			LOGGER.info("Change status called");
+			final long countryId = Long.parseLong(request.getParameter("countryId"));
+			final int status = Integer.parseInt(request.getParameter("status"));
+			this.country = (Country) this.context.getBean("country");
+			this.country = this.countryDao.read(countryId);
+			this.country.setStatus(status);
+			this.countryDao.update(this.country);
+			this.out = response.getWriter();
+			if(status==1){
+				this.out.write("de-active");
+			}else{
+				this.out.write("active");
+			}
 			
 		}
 	}

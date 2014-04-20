@@ -2,8 +2,8 @@ package com.wfms.dao.impl;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Logger;
 
 import org.hibernate.Criteria;
@@ -12,12 +12,9 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import com.wfms.controller.CountryController;
 import com.wfms.dao.BaseDao;
 import com.wfms.hibernate.HibernateUtil;
-import com.wfms.model.User;
 
 public class BaseDaoImpl<T, ID extends Serializable> implements BaseDao<T, ID> {
 
@@ -49,7 +46,6 @@ public class BaseDaoImpl<T, ID extends Serializable> implements BaseDao<T, ID> {
 			tx = session.beginTransaction();
 			savedEntity = (T) session.save(entity);
 			tx.commit();
-			session.close();
 		} catch (Exception e) {
 
 		}
@@ -64,7 +60,6 @@ public class BaseDaoImpl<T, ID extends Serializable> implements BaseDao<T, ID> {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			entity = (T) session.get(this.type, id);
-			session.close();
 		} catch (Exception e) {
 
 		}
@@ -79,7 +74,6 @@ public class BaseDaoImpl<T, ID extends Serializable> implements BaseDao<T, ID> {
 			tx = session.beginTransaction();
 			session.update(entity);
 			tx.commit();
-			session.close();
 			LOGGER.info("Entity updated successfully");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -94,7 +88,7 @@ public class BaseDaoImpl<T, ID extends Serializable> implements BaseDao<T, ID> {
 			tx = session.beginTransaction();
 			session.delete(entity);
 			tx.commit();
-			session.close();
+			LOGGER.info("deleted...\n\n\n");
 		} catch (Exception e) {
 
 		}
@@ -112,13 +106,21 @@ public class BaseDaoImpl<T, ID extends Serializable> implements BaseDao<T, ID> {
 	@Override
 	public List<T> getListByCriteria(final T instance, final String orderBy,
 			final int status) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Criteria criteria = session.createCriteria(this.type);
-		if (status >= 0)
-			criteria.add(Restrictions.eq("status", status));
-		if (orderBy != null)
-			criteria.addOrder(Order.asc(orderBy));
-		return criteria.list();
+		Session session = null;
+		Criteria criteria = null;
+		List<T> list = new ArrayList<T>();
+		try{
+			session = HibernateUtil.getSessionFactory().openSession();
+			criteria = session.createCriteria(this.type);
+			if (status >= 0)
+				criteria.add(Restrictions.eq("status", status));
+			if (orderBy != null)
+				criteria.addOrder(Order.asc(orderBy));
+			list = criteria.list();
+		}catch(Exception e){
+			
+		}
+		return list;
 	}
 
 	@Override

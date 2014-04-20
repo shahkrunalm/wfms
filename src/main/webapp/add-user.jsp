@@ -19,8 +19,19 @@
 											errorClass : "my-error-class",
 											rules : {
 												firstName : "required",
+												lastName : "required",
+												designationId : "required",
+												street : "required",
+												zipcode : "required",
+												mobile : "required",
+												homePhone : "required",
+												emergencyContactNo : "required",
+												emergencyContactName : "required",
+												cityId : "required",
 												countryId: "required",
 												stateId: "required",
+												personalEmail: "required",
+												birthDate: "required",
 												username : {
 													required : true,
 													minlength : 5,
@@ -39,6 +50,8 @@
 											},
 											messages : {
 												countryId: " please select country",
+												stateId: " please select state",
+												cityId: " please select city",
 												username : {
 													remote : jQuery.validator
 															.format(" someone already has that username, please try another")
@@ -108,7 +121,6 @@
 																	+ countryId,
 															success : function(
 																	result) {
-																alert(result);
 																var x = document
 																		.getElementById("stateId");
 																x.length = 0;
@@ -151,7 +163,6 @@
 																	+ stateId,
 															success : function(
 																	result) {
-																alert(result);
 																var x = document
 																		.getElementById("cityId");
 																x.length = 0;
@@ -187,6 +198,8 @@
 <%
 	List<Country> countryList = (List<Country>) application
 			.getAttribute("activeCountryList");
+	List<Designation> designationList = (List<Designation>) application
+.getAttribute("activeDesignationList");
 %>
 <%-- <%@ include file="check-permission.jsp" %> --%>
 <body>
@@ -204,7 +217,7 @@
 						<input type="hidden" name="action" value="add" />
 						<table width="100%">
 							<tr>
-								<td class="bold" width="15%">User Name</td>
+								<td class="bold" width="20%">User Name</td>
 								<td><input id="username" name="username"
 									placeholder="enter user name"></td>
 							</tr>
@@ -219,17 +232,31 @@
 									placeholder="enter last name"></td>
 							</tr>
 							<tr>
+								<td class="bold">Gender</td>
+								<td>
+									<input type="radio" name="gender" value="male" checked/> male 
+									<input type="radio" name="gender" value="female"/> female
+								</td>
+							</tr>
+							<tr>
 								<td class="bold">User Type</td>
-								<td><select name="userType" id="userType">
-										<option value="admin">Admin</option>
-										<option value="manager">Manager</option>
-										<option value="employee">Employee</option>
+								<td><select name="designationId" id="designationId">
+										<%
+											for (Designation designation : designationList) {
+										%><option value="<%=designation.getDesignationId()%>"><%=designation.getDesignationName()%></option>
+										<%
+											}
+										%>
 								</select></td>
 							</tr>
 							<tr>
 								<td class="bold">Birth date</td>
 								<td><input id="birthDate" name="birthDate"
 									placeholder="enter birth date"></td>
+							</tr>
+							<tr>
+								<td class="bold" width="15%">Address</td>
+								<td><input name="street" id="street" placeholder="enter address"></td>
 							</tr>
 							<tr>
 								<td class="bold" width="10%">Select Country</td>
@@ -256,22 +283,30 @@
 								</select></td>
 							</tr>
 							<tr>
-								<td class="bold">Designation</td>
-								<td><select name="designation">
-										<option value="Trainee">Trainee</option>
-										<option value="Trainee">Software Engineer</option>
-										<option value="Trainee">Sr. Software Engineer</option>
-										<option value="Trainee">System Analyst</option>
-										<option value="Trainee">Sr. System Analyst</option>
-										<option value="Trainee">Technical Architect</option>
-										<option value="Trainee">Sr. Technical Architect</option>
-										<option value="Trainee">Quality Engineer</option>
-										<option value="Trainee">Sr. Quality Engineer</option>
-										<option value="Trainee">Project Manager</option>
-										<option value="Trainee">Delivery Manager</option>
-										<option value="Trainee">Delivery Head</option>
-								</select></td>
+								<td class="bold">Zipcode</td>
+								<td><input name="zipcode" id="zipcode" placeholder="enter zipcode"></td>
 							</tr>
+							<tr>
+								<td class="bold">Mobile No</td>
+								<td><input name="mobile" id="mobile" placeholder="enter mobile no"></td>
+							</tr>
+							<tr>
+								<td class="bold">Home Phone No</td>
+								<td><input name="homePhone" id="homePhone" placeholder="enter home phone no"></td>
+							</tr>
+							<tr>
+								<td class="bold">Emergency Contact No</td>
+								<td><input name="emergencyContactNo" id="emergencyContactNo" placeholder="enter emergency contact no"></td>
+							</tr>
+							<tr>
+								<td class="bold">Emergency Contact Name</td>
+								<td><input name="emergencyContactName" id="emergencyContactName" placeholder="enter contact name"></td>
+							</tr>
+							<tr>
+								<td class="bold">Email</td>
+								<td><input name="personalEmail" id="personalEmail" placeholder="enter email"></td>
+							</tr>
+							
 							<tr>
 								<td></td>
 								<td><input type="submit" value="Add User"></td>
