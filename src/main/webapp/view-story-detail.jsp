@@ -32,6 +32,14 @@
 							<td><%=story.getStoryName()%></td>
 						</tr>
 						<tr>
+							<td width="15%" class="bold">Story Description</td>
+							<td><%=story.getDescription()%></td>
+						</tr>
+						<tr>
+							<td width="15%" class="bold">Created On</td>
+							<td><%=com.wfms.util.Utility.getOnlyDate(story.getCreatedOn())%></td>
+						</tr>
+						<tr>
 							<td width="15%" class="bold">Stories</td>
 							<td>
 							<%if(story.getTasks().size()==0){ %><div class="red">No record found</div> <%} %>
@@ -55,7 +63,11 @@
 									%>
 									<tr>
 										<td align="center"><%=++i%></td>
-										<td><%=task.getTaskName()%></td>
+										<td>
+											<a href="./TaskController?action=detail&taskId=<%=task.getTaskId()%>" title="click here to view task detail">
+											<%=task.getTaskName()%>
+											</a>
+										</td>
 										<td align="center">edit</td>
 										<td align="center">delete</td>
 										<td align="center"><%=task.getStatus()%></td>

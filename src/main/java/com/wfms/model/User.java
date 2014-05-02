@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -54,6 +55,10 @@ public class User {
 	@JoinColumn(name = "DESIGNATION_ID")  
 	private Designation designation;
 
+	@OneToOne
+	@JoinColumn(name = "PROJECT_ID")  
+	private Project project;
+	
 	@Embedded
 	private Address address;
 	
@@ -190,11 +195,12 @@ public class User {
 		this.gender = gender;
 	}
 
-	@Override
-	public String toString() {
-		return "User [userId=" + userId + ", username=" + username
-				+ ", userType=" + userType + ", designation=" + designation
-				+ "]";
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
 	}
 
 

@@ -2,6 +2,7 @@ package com.wfms.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -37,7 +38,7 @@ public class StateController extends HttpServlet {
 	
 	private Country country = null;
 	
-	private List<State> stateList = null;
+	private List<State> stateList = new ArrayList<State>();
 	
 	ApplicationContext context = null;
        
@@ -69,14 +70,7 @@ public class StateController extends HttpServlet {
 			this.stateDao.save(state);
 			response.sendRedirect(request.getContextPath() + "/save-successfully.jsp?entity=State");
 		}else if(action.equals(Constants.VIEW)){
-			int id = -1;
-			final String status = request.getParameter("status");
-			if(status!=null){
-				id = Integer.parseInt(status);
-				this.stateList = this.stateDao.getListByCriteria(this.state, "stateName", id);
-			}else{
-				this.stateList = this.stateDao.getListByCriteria(this.state, "stateName", id);
-			}
+			this.stateList = this.stateDao.getListByCriteria(this.state, "stateName", Integer.parseInt(request.getParameter("status")));
 			request.setAttribute("stateList", this.stateList);
 			request.getRequestDispatcher("view-state-list.jsp").forward(request, response);
 		}else if(action.equals(Constants.DELETE)){

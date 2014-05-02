@@ -56,9 +56,13 @@ br.clearfix {
 
 .box {
 	overflow: hidden;
-	/* margin: 0 10px 10px 0; */
+	margin: 0 10px 10px 0;
 }
 
+.inner_box {
+	overflow: hidden;
+	margin: 5px;
+}
 #content {
 	float: left;
 	padding: 10px 0px 0px 10px;

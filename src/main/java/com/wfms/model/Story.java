@@ -34,6 +34,9 @@ public class Story {
 	@Column(name="CREATED_ON")
 	private Date createdOn;
 	
+	@Column(name="CREATED_BY")
+	private String createdBy;
+	
 	@OneToMany(mappedBy = "story")  
 	private Set<Task> tasks = new HashSet<Task>();
 	
@@ -106,6 +109,14 @@ public class Story {
 
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
 	}
 	
 	

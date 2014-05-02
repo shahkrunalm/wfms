@@ -26,10 +26,11 @@
 					</table>
 					<table>
 						<tr>
-							<td><a href="./StateController?action=view&status=1">active</a>
-								| <a href="./StateController?action=view&status=0">de-active</a>
-								| <a href="./StateController?action=view">view all</a></td>
+							<td><a href="./StateController?action=view&status=1" title="click here to view active list">active</a>
+								| <a href="./StateController?action=view&status=0" title="click here to view de-active list">de-active</a>
+								| <a href="./StateController?action=view&status=-1" title="click here to view all">view all</a></td>
 						</tr>
+						<tr><td>&nbsp;</td></tr>
 					</table>
 					<%
 						if (stateList.size() == 0) {
@@ -47,6 +48,7 @@
 							<th>Sr. No.</th>
 							<th>State Name</th>
 							<th>No. of Cities</th>
+							<th>City</th>
 							<th>Edit</th>
 							<th>Delete</th>
 							<th>Status</th>
@@ -59,6 +61,7 @@
 							<td align="center"><%=++i%></td>
 							<td align="center"><%=state.getStateName()%></td>
 							<td align="center"><%=state.getCities().size()%></td>
+							<td align="center"><a href="add-city.jsp?stateId=<%=state.getStateId()%>" title="click here to add city">add</a></td>
 							<td align="center">edit</td>
 							<td align="center">delete</td>
 							<td align="center">

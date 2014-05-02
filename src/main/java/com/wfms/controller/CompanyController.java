@@ -1,6 +1,8 @@
 package com.wfms.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -8,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -20,6 +23,7 @@ import com.wfms.dao.impl.CompanyDaoImpl;
 import com.wfms.model.Address;
 import com.wfms.model.Company;
 import com.wfms.model.Contact;
+import com.wfms.model.User;
 import com.wfms.util.Constants;
 
 /**
@@ -35,7 +39,7 @@ public class CompanyController extends HttpServlet {
 	
 	private ApplicationContext context = null;
        
-	private List<Company> companyList = null;
+	private List<Company> companyList = new ArrayList<Company>();
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -47,42 +51,44 @@ public class CompanyController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		final String action = request.getParameter(Constants.ACTION);
-		this.context = new ClassPathXmlApplicationContext("application-context.xml");
-		this.companyDao = (CompanyDaoImpl) this.context.getBean("companyDao");
-		this.company = (Company) this.context.getBean("company");
-		
-		if(action.equals(Constants.ADD)){
-			this.company = this.populateCompany(request);
-			this.companyDao.save(this.company);
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			final User user = (User) session.getAttribute("userssn");
 			
-			// Populating active company list
-			getServletContext().setAttribute("activeCompanyList", this.companyDao.getListByCriteria(this.company, "companyName", 1));
+			final String action = request.getParameter(Constants.ACTION);
+			this.context = new ClassPathXmlApplicationContext("application-context.xml");
+			this.companyDao = (CompanyDaoImpl) this.context.getBean("companyDao");
+			this.company = (Company) this.context.getBean("company");
 			
-			response.sendRedirect(request.getContextPath() + "/save-successfully.jsp?entity=Company");
-		}else if(action.equals(Constants.VIEW)){
-			int id = -1;
-			final String status = request.getParameter("status");
-			if(status!=null){
-				id = Integer.parseInt(status);
-				this.companyList = this.companyDao.getListByCriteria(this.company, "companyName", id);
+			if(action.equals(Constants.ADD)){
+				this.company = this.populateCompany(request, user.getUsername());
+				this.companyDao.save(this.company);
+				
+				// Populating active company list
+				getServletContext().setAttribute("activeCompanyList", this.companyDao.getListByCriteria(this.company, "companyName", 1));
+				
+				response.sendRedirect(request.getContextPath() + "/save-successfully.jsp?entity=Company");
+			}else if(action.equals(Constants.VIEW)){
+				this.companyList = this.companyDao.getListByCriteria(this.company, "companyName", Integer.parseInt(request.getParameter("status")));
+				request.setAttribute("companyList", this.companyList);
+				request.getRequestDispatcher("view-company-list.jsp").forward(request, response);
+			}else if(action.equals(Constants.DELETE)){
+				final long companyId = Long.parseLong(request.getParameter("companyId"));
+				this.company = this.companyDao.read(companyId);
+				this.companyDao.delete(company);
+			}else if(action.equals(Constants.DETAIL)){
+				final long companyId = Long.parseLong(request.getParameter("companyId"));
+				this.company = this.companyDao.read(companyId);
+				request.setAttribute("company", this.company);
+				request.getRequestDispatcher("view-company-detail.jsp").forward(request, response);
+
 			}else{
-				this.companyList = this.companyDao.getListByCriteria(this.company, "companyName", id);
+				
 			}
-			request.setAttribute("companyList", this.companyList);
-			request.getRequestDispatcher("view-company-list.jsp").forward(request, response);
-		}else if(action.equals(Constants.DELETE)){
-			final long companyId = Long.parseLong(request.getParameter("companyId"));
-			this.company = this.companyDao.read(companyId);
-			this.companyDao.delete(company);
-		}else if(action.equals(Constants.DETAIL)){
-			final long companyId = Long.parseLong(request.getParameter("companyId"));
-			this.company = this.companyDao.read(companyId);
-			request.setAttribute("company", this.company);
-			request.getRequestDispatcher("view-company-detail.jsp").forward(request, response);
 
 		}else{
-			
+			response.sendRedirect(request.getContextPath()
+					+ "/login.jsp?code=1");
 		}
 	}
 
@@ -93,7 +99,7 @@ public class CompanyController extends HttpServlet {
 		doGet(request, response);
 	}
 
-	private Company populateCompany(HttpServletRequest request){
+	private Company populateCompany(HttpServletRequest request, final String username){
 		Company company = (Company) this.context.getBean("company");
 		Address address = (Address) this.context.getBean("address");
 		Contact contact = (Contact) this.context.getBean("contact");
@@ -119,6 +125,10 @@ public class CompanyController extends HttpServlet {
 		address.setZipcode(request.getParameter("zipcode"));
 		
 		company.setAddress(address);
+		
+		company.setAddedOn(new Date());
+		
+		company.setAddedBy(username);
 		
 		contact.setEmergencyContactName(request.getParameter("emergencyContactName"));
 		

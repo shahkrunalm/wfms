@@ -60,11 +60,4 @@ public class Designation {
 		this.users = users;
 	}
 
-	@Override
-	public String toString() {
-		return "Designation [designationId=" + designationId
-				+ ", designationName=" + designationName + ", status=" + status
-				+ ", users=" + users + "]";
-	}
-	
 }

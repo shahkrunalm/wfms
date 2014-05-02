@@ -26,8 +26,14 @@
 												zipcode: "required",
 												workPhone: "required",
 												emergencyContactName: "required",
-												website: "required",
-												personalEmail: "required"
+												website: {
+													required: true,
+													url: true
+												},
+												personalEmail: {
+													required: true,
+													email: true
+												}
 												
 											},
 											messages : {

@@ -1,5 +1,6 @@
 package com.wfms.model;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,6 +23,12 @@ public class Company {
 	
 	@Column(name="COMPANY_NAME")
 	private String companyName;
+	
+	@Column(name="ADDED_BY")
+	private String addedBy;
+	
+	@Column(name="ADDED_ON")
+	private Date addedOn;
 	
 	@Embedded
 	private Address address;
@@ -81,6 +88,22 @@ public class Company {
 
 	public void setContact(Contact contact) {
 		this.contact = contact;
+	}
+
+	public String getAddedBy() {
+		return addedBy;
+	}
+
+	public void setAddedBy(String addedBy) {
+		this.addedBy = addedBy;
+	}
+
+	public Date getAddedOn() {
+		return addedOn;
+	}
+
+	public void setAddedOn(Date addedOn) {
+		this.addedOn = addedOn;
 	}
 	
 	

@@ -1,3 +1,4 @@
+<%@page import="com.wfms.util.Constants"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -62,10 +63,11 @@ function changeStatus(userId, status){
 					</table>
 					<table>
 						<tr>
-							<td><a href="./UserController?action=view&status=1">active</a>
-								| <a href="./UserController?action=view&status=0">de-active</a>
-								| <a href="./UserController?action=view&status=-1">view all</a></td>
+							<td><a href="./UserController?action=view&status=1" title="click here to view active list">active</a>
+								| <a href="./UserController?action=view&status=0" title="click here to view de-active list">de-active</a>
+								| <a href="./UserController?action=view&status=-1" title="click here to view all">view all</a></td>
 						</tr>
+						<tr><td>&nbsp;</td></tr>
 					</table>
 					<%
 						if (userList.size() == 0) {
@@ -90,23 +92,23 @@ function changeStatus(userId, status){
 						</tr>
 						<%
 							int i = 0;
-								for (User user : userList) {
+								for (User u : userList) {
 						%>
 						<tr>
 							<td align="center"><%=++i%></td>
 							<td align="center">
-							<a href="./UserController?action=detail&userId=<%=user.getUserId()%>"
+							<a href="./UserController?action=detail&userId=<%=u.getUserId()%>"
 							 	title="click here to view user detail">
-							<%=user.getUsername()%></a></td>
-							<td align="center"><a href="./UserController?action=detail&userId=<%=user.getUserId()%>"
-							 	title="click here to view user detail"><%=user.getFirstName()%> <%=user.getLastName()%></a></td>
-							<td align="center"><%=user.getUserType()%></td>
-							<td align="center"><a href="javascript:edit(<%=user.getUserId()%>)" title="click here to edit user detail">edit</a></td>
-							<td align="center"><a href="javascript:deleteUser(<%=user.getUserId()%>)" title="click here to delete user detail">delete</a></td>
+							<%=u.getUsername()%></a></td>
+							<td align="center"><a href="./UserController?action=detail&userId=<%=u.getUserId()%>"
+							 	title="click here to view user detail"><%=u.getFirstName()%> <%=u.getLastName()%></a></td>
+							<td align="center"><%=u.getUserType()%></td>
+							<td align="center">edit</td>
+							<td align="center">delete</td>
 							<td align="center">
 								<%
-									if (user.getStatus() == 1) {
-								%><a href="javascript:changeStatus(<%=user.getUserId()%>,<%=user.getStatus()%>)" title="click here to update status"><div class="green">active</div></a>
+									if (u.getStatus() == Constants.ACTIVE) {
+								%><div class="green">active</div>
 								<%
 									} else {
 								%><div class="red">de-active</div>
@@ -114,6 +116,21 @@ function changeStatus(userId, status){
 									}
 								%>
 							</td>
+							<!-- 
+							<td align="center"><a href="javascript:edit(<%=u.getUserId()%>)" title="click here to edit user detail">edit</a></td>
+							<td align="center"><a href="javascript:deleteUser(<%=u.getUserId()%>)" title="click here to delete user detail">delete</a></td>
+							<td align="center">
+								<%
+									if (u.getStatus() == 1) {
+								%><a href="javascript:changeStatus(<%=u.getUserId()%>,<%=u.getStatus()%>)" title="click here to update status"><div class="green">active</div></a>
+								<%
+									} else {
+								%><div class="red">de-active</div>
+								<%
+									}
+								%>
+							</td>
+							-->
 						</tr>
 						<%
 							}

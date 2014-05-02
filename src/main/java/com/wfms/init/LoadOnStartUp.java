@@ -30,6 +30,8 @@ import com.wfms.model.Designation;
 import com.wfms.model.Project;
 import com.wfms.model.Story;
 import com.wfms.model.User;
+import com.wfms.util.Constants;
+import com.wfms.util.UserType;
 
 /**
  * Servlet implementation class LoadOnStartUp
@@ -81,7 +83,7 @@ public class LoadOnStartUp extends HttpServlet {
 		
 		// populating active country list
 		getServletContext().setAttribute("activeCountryList",
-				this.countryDao.getListByCriteria(this.country, "countryName", 1));
+				this.countryDao.getListByCriteria(this.country, "countryName", Constants.ACTIVE));
 		
 		
 		this.companyDao = (CompanyDaoImpl) this.context.getBean("companyDao");
@@ -90,7 +92,7 @@ public class LoadOnStartUp extends HttpServlet {
 		
 		// populating active company list
 		getServletContext().setAttribute("activeCompanyList",
-				this.companyDao.getListByCriteria(this.company, "companyName", 1));
+				this.companyDao.getListByCriteria(this.company, "companyName", Constants.ACTIVE));
 		
 		this.projectDao = (ProjectDaoImpl) this.context.getBean("projectDao");
 		
@@ -98,7 +100,7 @@ public class LoadOnStartUp extends HttpServlet {
 		
 		// populating active project list
 		getServletContext().setAttribute("activeProjectList",
-				this.projectDao.getListByCriteria(this.project, "projectName", 1));
+				this.projectDao.getListByCriteria(this.project, "projectName", Constants.ACTIVE));
 		
 		this.storyDao = (StoryDaoImpl) this.context.getBean("storyDao");
 		
@@ -106,7 +108,7 @@ public class LoadOnStartUp extends HttpServlet {
 		
 		// populating active story list
 		getServletContext().setAttribute("activeStoryList",
-				this.storyDao.getListByCriteria(this.story, "storyName", 1));
+				this.storyDao.getListByCriteria(this.story, "storyName", Constants.ACTIVE));
 
 		this.designationDao = (DesignationDaoImpl) this.context.getBean("designationDao");
 		
@@ -114,7 +116,7 @@ public class LoadOnStartUp extends HttpServlet {
 		
 		// populating active story list
 		getServletContext().setAttribute("activeDesignationList",
-				this.designationDao.getListByCriteria(this.designation, "designationName", 1));
+				this.designationDao.getListByCriteria(this.designation, "designationName", Constants.ACTIVE));
 		
 		this.userDao = (UserDaoImpl) this.context.getBean("userDao");
 		
@@ -123,11 +125,11 @@ public class LoadOnStartUp extends HttpServlet {
 		
 		// populating active delivery manager list
 		getServletContext().setAttribute("activeDMList",
-				this.userDao.getUserListByDesignation(1));
+				this.userDao.getUserListByDesignation(UserType.DELIVERY_MANAGER, Constants.ACTIVE));
 		
 		// populating active project manager list
 		getServletContext().setAttribute("activePMList",
-				this.userDao.getUserListByDesignation(3));
+				this.userDao.getUserListByDesignation(UserType.PROJECT_MANAGER, Constants.ACTIVE));
 	}
 
 	/**

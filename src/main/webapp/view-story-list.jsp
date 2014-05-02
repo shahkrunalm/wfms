@@ -26,9 +26,12 @@
 					</table>
 					<table>
 						<tr>
-							<td><a href="./ProjectController?action=view&status=1">active</a>
-								| <a href="./ProjectController?action=view&status=0">de-active</a>
-								| <a href="./ProjectController?action=view">view all</a></td>
+							<td><a href="./ProjectController?action=view&status=1" title="click here to view active list">active</a>
+								| <a href="./ProjectController?action=view&status=0" title="click here to view de-active list">de-active</a>
+								| <a href="./ProjectController?action=view&status=-1" title="click here to view all">view all</a></td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
 						</tr>
 					</table>
 					<%
@@ -47,7 +50,7 @@
 							<th>Sr. No.</th>
 							<th>Story Name</th>
 							<th>Project Name</th>
-							<th>View Task</th>
+							<th>Tasks</th>
 							<th>Add Task</th>
 							<th>Edit</th>
 							<th>Delete</th>
@@ -59,9 +62,12 @@
 						%>
 						<tr>
 							<td align="center"><%=++i%></td>
-							<td align="center"><%=story.getStoryName()%></td>
+							<td align="center">
+							<a href="./StoryController?action=detail&storyId=<%=story.getStoryId()%>"
+							   title="click here to view story detail"><%=story.getStoryName()%></a>
+							</td>
 							<td align="center"><%=story.getProject().getProjectName()%></td>
-							<td align="center">view (<%=story.getTasks().size()%>)</td>
+							<td align="center"><%=story.getTasks().size()%></td>
 							<td align="center"><a href="add-task.jsp?storyId=<%=story.getStoryId() %>"
 											title="click here to add task">add</td>
 							<td align="center">edit</td>

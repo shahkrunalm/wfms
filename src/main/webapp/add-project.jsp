@@ -26,8 +26,6 @@
 				changeMonth : true,
 				changeYear : true,
 				dateFormat : "dd-mm-yy",
-				minDate : "-780m +0w",
-				maxDate : "-144m +0w"
 			});
 		});
 		
@@ -36,8 +34,6 @@
 				changeMonth : true,
 				changeYear : true,
 				dateFormat : "dd-mm-yy",
-				minDate : "-780m +0w",
-				maxDate : "-144m +0w"
 			});
 		});
 	});
@@ -110,8 +106,8 @@
 								<td>
 									<select name="dmUserId" id="dmUserId">
 										<%
-											for (User user : dmList) {
-										%><option value="<%=user.getUserId()%>"><%=user.getFirstName()%> <%=user.getLastName()%> (<%=user.getUsername()%>)</option>
+											for (User u : dmList) {
+										%><option value="<%=u.getUserId()%>"><%=u.getFirstName()%> <%=u.getLastName()%> (<%=u.getUsername()%>)</option>
 										<%
 											}
 										%>
@@ -123,8 +119,8 @@
 								<td>
 									<select name="pmUserId" id="pmUserId">
 										<%
-											for (User user : pmList) {
-										%><option value="<%=user.getUserId()%>"><%=user.getFirstName()%> <%=user.getLastName()%> (<%=user.getUsername()%>)</option>
+											for (User u : pmList) {
+										%><option value="<%=u.getUserId()%>"><%=u.getFirstName()%> <%=u.getLastName()%> (<%=u.getUsername()%>)</option>
 										<%
 											}
 										%>

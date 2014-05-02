@@ -62,9 +62,12 @@ function changeStatus(designationId, status){
 					</table>
 					<table>
 						<tr>
-							<td><a href="./DesignationController?action=view&status=1">active</a>
-								| <a href="./DesignationController?action=view&status=0">de-active</a>
-								| <a href="./DesignationController?action=view&status=-1">view all</a></td>
+							<td><a href="./DesignationController?action=view&status=1" title="click here to view active list">active</a>
+								| <a href="./DesignationController?action=view&status=0" title="click here to view de-active list">de-active</a>
+								| <a href="./DesignationController?action=view&status=-1" title="click here to view all">view all</a></td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
 						</tr>
 					</table>
 					<%
@@ -94,7 +97,21 @@ function changeStatus(designationId, status){
 						<tr>
 							<td align="center"><%=++i%></td>
 							<td align="center"><%=designation.getDesignationName()%></td>
-							<td align="center"><%=designation.getUsers().size()%></td>
+							<td align="center"><a href="./UserController?action=by_designation&status=1&designationId=<%=designation.getDesignationId()%>" title="click here to view list"><%=designation.getUsers().size()%></a></td>
+							<td align="center">edit</td>
+							<td align="center">delete</td>
+							<td align="center">
+								<%
+									if (designation.getStatus() == 1) {
+								%><div class="green">active</div>
+								<%
+									} else {
+								%><div class="red">de-active</div>
+								<%
+									}
+								%>
+							</td>
+							<!-- 
 							<td align="center"><a href="javascript:edit(<%=designation.getDesignationId()%>)" title="click here to edit designation detail">edit</a></td>
 							<td align="center"><a href="javascript:deleteDesignation(<%=designation.getDesignationId()%>)" title="click here to delete designation detail">delete</a></td>
 							<td align="center">
@@ -108,6 +125,7 @@ function changeStatus(designationId, status){
 									}
 								%>
 							</td>
+							 -->
 						</tr>
 						<%
 							}

@@ -62,10 +62,11 @@ function changeStatus(countryId, status){
 					</table>
 					<table>
 						<tr>
-							<td><a href="./CountryController?action=view&status=1">active</a>
-								| <a href="./CountryController?action=view&status=0">de-active</a>
-								| <a href="./CountryController?action=view&status=-1">view all</a></td>
+							<td><a href="./CountryController?action=view&status=1" title="click here to view active list">active</a>
+								| <a href="./CountryController?action=view&status=0" title="click here to view de-active list">de-active</a>
+								| <a href="./CountryController?action=view&status=-1" title="click here to view all">view all</a></td>
 						</tr>
+						<tr><td>&nbsp;</td></tr>
 					</table>
 					<%
 						if (countryList.size() == 0) {

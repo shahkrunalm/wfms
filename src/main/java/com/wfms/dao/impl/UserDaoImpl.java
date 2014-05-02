@@ -3,10 +3,10 @@ package com.wfms.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.Criteria;
+import javax.servlet.http.HttpSession;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import com.wfms.dao.UserDao;
@@ -17,16 +17,28 @@ public class UserDaoImpl extends BaseDaoImpl<User, Long> implements UserDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<User> getUserListByDesignation(long designationId) {
+	public List<User> getUserListByDesignation(final long designationId,
+			final int status) {
 		Session session = null;
+		Query query = null;
 		List<User> list = new ArrayList<User>();
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
-			Query query = session
-					.createSQLQuery(
-							"SELECT * FROM USER U WHERE U.DESIGNATION_ID = :designationId AND STATUS=1")
-					.addEntity(User.class)
-					.setParameter("designationId", designationId);
+			if (status == 1 || status == 0) {
+				query = session
+						.createSQLQuery(
+								"SELECT * FROM USER U WHERE U.DESIGNATION_ID = :designationId AND STATUS= :status")
+						.addEntity(User.class)
+						.setParameter("designationId", designationId)
+						.setParameter("status", status);
+			} else {
+				query = session
+						.createSQLQuery(
+								"SELECT * FROM USER U WHERE U.DESIGNATION_ID = :designationId")
+						.addEntity(User.class)
+						.setParameter("designationId", designationId);
+			}
+
 			list = query.list();
 		} catch (Exception e) {
 
@@ -53,4 +65,50 @@ public class UserDaoImpl extends BaseDaoImpl<User, Long> implements UserDao {
 		return user;
 	}
 
+	@Override
+	public void logout(HttpSession session) {
+		final User user = (User) session.getAttribute("userssn");
+		if (user != null)
+			session.invalidate();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> getResourcePoolList() {
+		Session session = null;
+		Query query = null;
+		List<User> list = new ArrayList<User>();
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			query = session
+					.createSQLQuery(
+							"SELECT * FROM USER U WHERE U.PROJECT_ID IS NULL AND STATUS=1 AND DESIGNATION_ID IN (4,5)")
+					.addEntity(User.class);
+
+			list = query.list();
+		} catch (Exception e) {
+
+		}
+		return list;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> getProjectUserList(final long projectId) {
+		Session session = null;
+		Query query = null;
+		List<User> list = new ArrayList<User>();
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			query = session
+					.createSQLQuery(
+							"SELECT * FROM USER U WHERE U.PROJECT_ID = :projectId AND STATUS=1 AND DESIGNATION_ID IN (4,5)")
+					.addEntity(User.class).setParameter("projectId", projectId);
+
+			list = query.list();
+		} catch (Exception e) {
+
+		}
+		return list;
+	}
 }

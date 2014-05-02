@@ -12,7 +12,7 @@
 	<%@ include file="menu.jsp"%>
 	<%-- <%@ include file="check-permission.jsp" %> --%>
 	<%
-		User user = (User) request.getAttribute("user");
+		User u = (User) request.getAttribute("user");
 	%>
 	<div id="wrapper">
 		<div id="page">
@@ -25,48 +25,62 @@
 					</table>
 					<table width="100%" border="0">
 						<%
-							if (user != null) {
+							if (u != null) {
 						%>
 						<tr>
 							<td width="15%" class="bold">User Name</td>
-							<td><%=user.getUsername()%></td>
+							<td><%=u.getUsername()%></td>
 						</tr>
 						<tr>
 							<td width="15%" class="bold">Name</td>
-							<td><%=user.getFirstName()%> <%=user.getLastName()%></td>
+							<td><%=u.getFirstName()%> <%=u.getLastName()%></td>
 						</tr>
 						<tr>
 							<td width="15%" class="bold">Gender</td>
-							<td><%=user.getGender()%></td>
+							<td><%=u.getGender()%></td>
 						</tr>
 						<tr>
 							<td width="15%" class="bold">Address</td>
-							<td><%=user.getAddress().getStreet()%>, 
-								<%=user.getAddress().getCity()%>, 
-								<%=user.getAddress().getState()%>,
-								<%=user.getAddress().getCountry()%> - <%=user.getAddress().getZipcode()%>
+							<td><%=u.getAddress().getStreet()%>, 
+								<%=u.getAddress().getCity()%>, 
+								<%=u.getAddress().getState()%>,
+								<%=u.getAddress().getCountry()%> - <%=u.getAddress().getZipcode()%>
 							</td>
 						</tr>
 						<tr>
 							<td width="15%" class="bold">Mobile</td>
-							<td><%=user.getContact().getMobile()%></td>
+							<td><%=u.getContact().getMobile()%></td>
 						</tr>
 						<tr>
 							<td width="15%" class="bold">Home Phone</td>
-							<td><%=user.getContact().getHomePhone()%></td>
+							<td><%=u.getContact().getHomePhone()%></td>
 						</tr>
 						<tr>
 							<td width="15%" class="bold">Contact Name</td>
-							<td><%=user.getContact().getEmergencyContactName()%></td>
+							<td><%=u.getContact().getEmergencyContactName()%></td>
 						</tr>
 						<tr>
 							<td width="15%" class="bold">Contact Number</td>
-							<td><%=user.getContact().getEmergencyContactNo()%></td>
+							<td><%=u.getContact().getEmergencyContactNo()%></td>
 						</tr>
 						<tr>
 							<td width="15%" class="bold">Email</td>
-							<td><%=user.getContact().getPersonalEmail()%></td>
+							<td><%=u.getContact().getPersonalEmail()%></td>
 						</tr>
+						<%if(u.getProject()!=null){ %>
+						<tr>
+							<td width="15%" class="bold">Project Name</td>
+							<td><%=u.getProject().getProjectName()%></td>
+						</tr>
+						<tr>
+							<td width="15%" class="bold">Delivery Manager</td>
+							<td><%=u.getProject().getDeliveryManager().getFirstName()%> <%=u.getProject().getDeliveryManager().getLastName()%> (<%=u.getProject().getDeliveryManager().getUsername()%>)</td>
+						</tr>
+						<tr>
+							<td width="15%" class="bold">Project Manager</td>
+							<td><%=u.getProject().getProjectManager().getFirstName()%> <%=u.getProject().getProjectManager().getLastName()%> (<%=u.getProject().getProjectManager().getUsername()%>)</td>
+						</tr>
+						<%} %>
 					</table>
 					<%
 						} else

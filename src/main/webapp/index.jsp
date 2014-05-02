@@ -1,100 +1,97 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<!--
-Design by Free CSS Templates
-http://www.freecsstemplates.org
-Released for free under a Creative Commons Attribution 3.0 License
-
-Name       : Oceania
-Description: A two-column, fixed-width design with a bright color scheme.
-Version    : 1.0
-Released   : 20120208
--->
-<html xmlns="http://www.w3.org/1999/xhtml">
+    pageEncoding="ISO-8859-1" import="com.bloodbank.bean.*" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
-<meta name="description" content="" />
-<meta name="keywords" content="" />
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<title>Oceania by FCT</title>
-<link rel="stylesheet" type="text/css" href="css/style.css" />
+<link rel="stylesheet" type="text/css" href="css/two_column_style.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="css/ui-lightness/jquery-ui-1.8.20.custom.css" />
+<script src="js/jquery-1.7.2.min.js" type="text/javascript"></script>
+<script src="js/jquery-ui-1.8.20.custom.min.js" type="text/javascript"></script>
+<script src="js/jquery.validate.min.js" type="text/javascript"></script>
+<title>Welcome to wfms</title>
 </head>
+<script type="text/javascript">
+$().ready(function() {
+	$("#login-form").validate({
+		errorClass: "my-error-class",
+		rules: {
+			username: "required",
+			password: "required"
+		}
+	});
+});
+</script>
 <body>
+<%
+User user = null;
+user = (User) session.getAttribute("user");
+%>
 <div id="wrapper">
-	<div id="header">
-		<div id="logo">
-			<h1><a href="#">Oceania</a></h1>
-		</div>
-		<div id="menu">
-			<ul>
-				<li class="first current_page_item"><a href="#">Homepage</a></li>
-				<li><a href="#">Photos</a></li>
-				<li><a href="#">About</a></li>
-				<li><a href="#">Blog</a></li>
-				<li class="last"><a href="#">Contact</a></li>
-			</ul>
-			<br class="clearfix" />
-		</div>
-	</div>
-	<div id="page">
-		<div id="content">
-			<div class="box">
-				<h2>Welcome to Oceania</h2>
-				<p>
-					This is <strong>Oceania</strong>, a free and fully standards-compliant free CSS template by <a href="http://www.freecsstemplates.org/" rel="nofollow">FreeCSSTemplates.org</a>. This free template is released under a <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attributions 3.0</a> license, so you are pretty much free to do whatever you want with it (even use it commercially) provided you keep all of the links in the footer intact. Aside from that, have fun with it :)
-				</p>
-			</div>
-			<div class="box">
-				<h3>Condimentum dictum mi dignissim hendrerit</h3>
-				<p>
-					Nisl feugiat aliquet curae volutpat commodo amet aenean. Ipsum fermentum sapien lacus. Lorem mauris eleifend venenatis lorem nec natoque adipiscing. Mollis primis magnis pretium etiam. Consectetur consectetur eget libero curabitur integer lectus. Lorem fringilla sit risus consequat. Phasellus nibh quam turpis montes.
-				</p>
-				<ul class="list">
-					<li class="first"><a href="#">Condimentum egestas quisque orci varius eget gravida</a></li>
-					<li><a href="#">Suspendisse lobortis fringilla augue tortor malesuada</a></li>
-					<li><a href="#">Egestas quisque praesent convallis euismod turpis non interdum</a></li>
-					<li class="last"><a href="#">Hendrerit adipiscing arcu nibh id semper</a></li>
-				</ul>
-			</div>
-			<div class="box">
-				<h3>Adipiscing odio varius egestas</h3>
-				<p>
-					Pretium condimentum viverra adipiscing sociis tincidunt. Tincidunt non hendrerit arcu nascetur nec enim. Condimentum curae euismod massa etiam parturient gravida. Tempus odio penatibus posuere elementum. Justo gravida curae lectus. Aliquet egestas ante ornare. Consectetur dolor cum ultricies ligula sodales.
-				</p>
-				<ul class="list">
-					<li class="first"><a href="#">Cras metus tincidunt risus aenean egestas vulputate</a></li>
-					<li><a href="#">Sollicitudin pellentesque nisl blandit sit vulputate lectus viverra</a></li>
-					<li class="last"><a href="#">Condimentum elementum a commodo cubilia suscipit quam purus</a></li>
-				</ul>
-			</div>
-			<br class="clearfix" />
-		</div>
-		<div id="sidebar">
-			<div class="box">
-				<h3>Arcu tempus</h3>
-				<p>
-					Viverra pharetra eget odio tortor. Montes erat suscipit odio condimentum laoreet luctus neque.
-				</p>
-			</div>
-			<div class="box">
-				<h3>Viverra amet</h3>
-				<p>
-					Eleifend et amet pretium pellentesque ultricies sed amet. Condimentum amet praesent fusce felis urna ornare eget ridiculus.
-				</p>
-				<ul class="list">
-					<li class="first"><a href="#">Tellus blandit sollicitudin</a></li>
-					<li><a href="#">Sodales magna commodo</a></li>
-					<li><a href="#">Lacus quisque sagittis</a></li>
-					<li><a href="#">Sollicitudin aliquet fringilla</a></li>
-					<li class="last"><a href="#">Posuere pellentesque</a></li>
-				</ul>
-			</div>
-		</div>
-		<br class="clearfix" />
-	</div>
+<div id="page">
+<div id="content">
+	<div class="box">
+		<a href="index.jsp">home</a> |
+		<a href="about us">about us</a> |
+		<a href="">contact us</a> | 
+<%
+if(user!=null){
+	if(user.getUserType()==1){
+		%><a href="admin-dashboard.jsp" title="click here to go to dashboard">dashboard</a> | <% 
+	}else{
+		%><a href="user-dashboard.jsp" title="click here to go to dashboard">dashboard</a> | <%
+	}
+	%><a href="logout-action">logout</a> <%
+}else{
+	%><a href="donor-registration.jsp">donor registration</a><% 
+}
+%>
+<br><br>
+		<img src="images/user_dashboard.jpg" height="31%" width="100%" />
 </div>
-<div id="footer">
-	Copyright (c) 2012 Sitename.com. All rights reserved. Design by <a href="http://www.freecsstemplates.org/" rel="nofollow">FreeCSSTemplates.org</a>.
-</div>
+
+</div> <!-- div content end -->
+<%
+if(user==null){
+%>
+<div id="sidebar">
+	<div class="box">
+	<form name="login-form" id="login-form" action="login-action" method="post">
+		<table border="0" width="100%" id="table-5">
+			<tr>
+				<td align="left" class="bold">login</td>
+			</tr>
+		</table>
+		<table border="0" width="100%">
+			<tr>
+				<td class="bold">&nbsp;username</td>
+			</tr>
+			<tr>
+				<td>&nbsp;<input name="username" id="username" /></td>
+			</tr>
+			<tr>
+				<td class="bold">&nbsp;password</td>
+			</tr>
+			<tr>
+				<td>&nbsp;<input type="password" name="password" id="password" /></td>
+			</tr>
+			<tr>
+				<td>&nbsp;<input type="submit" value="login"/></td>
+			</tr>
+		</table>
+		</form>
+	</div>
+</div> <!-- div sidebar end -->
+<%}else{ %>
+<div id="sidebar">
+	<div class="box">
+	<img src="images/give_blood.jpg" height="35%" width="100%"/>
+	</div>
+</div> <!-- div sidebar end -->
+<%} %>
+<br class="clearfix" />
+</div> <!-- div page end -->
+</div> <!-- div wrapper end -->
+<%@ include file="footer.jsp" %>
 </body>
 </html>

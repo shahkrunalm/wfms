@@ -12,10 +12,12 @@
 		$("#add-task-form").validate({
 			errorClass : "my-error-class",
 			rules : {
-				taskName : "required"
+				taskName : "required",
+				description : "required"
 			},
 			messages : {
-				taskName : " please enter task name"
+				taskName : " please enter task name",
+				description : " please enter description"
 			}
 		});
 	});
@@ -43,6 +45,9 @@
 								<td><input name="taskName" id="taskName"
 									placeholder="enter task name" /></td>
 							</tr>
+							<tr>
+								<td class="bold">Description</td>
+								<td><textarea rows="5" cols="25" name="description" id="description" placeholder="enter description" ></textarea></td></tr>
 							<tr>
 								<td>&nbsp;</td>
 								<td><input type="submit" value="Add Task" /></td>

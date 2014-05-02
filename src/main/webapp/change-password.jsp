@@ -53,15 +53,15 @@ if(code!=null){
 <input type="hidden" name="action" value="changePassword" />
 <table width="100%">
 <tr>	
-	<td class="bold" width="15%">current password</td>
+	<td class="bold" width="15%">Current Password</td>
 	<td><input name="password" id="password" type="password" placeholder="enter your current password" /></td>
 </tr>
 <tr>	
-	<td class="bold">new password</td>
+	<td class="bold">New Password</td>
 	<td><input name="newPassword" id="newPassword" type="password" placeholder="enter new password" /></td>
 </tr>
 <tr>	
-	<td class="bold">confirm password</td>
+	<td class="bold">Confirm Password</td>
 	<td><input name="confirmPassword" id="confirmPassword" type="password" placeholder="enter password again" /></td>
 </tr>
 <tr>	

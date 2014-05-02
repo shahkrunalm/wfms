@@ -9,9 +9,21 @@ public class Constants {
 	public final static String ACTION = "action";
 	public final static String DETAIL = "detail";
 	public final static String LOGIN = "login";
+	public final static String LOGOUT = "logout";
+	public final static String ASSIGN_TASK = "assign_task";
+	public final static String MY_TASK = "my_task";
+	public final static String ASSIGN = "assign";
+	public final static String UPDATE_TASK_STATUS = "update_task_status";
 	public final static int ACTIVE = 1;
+	public final static int OPEN = 1;
+	public final static int IN_PROGRESS = 2;
+	public final static int CLOSED = 3;
+	public final static int BLOCKED = 4;
 	public final static int DEACTIVE = 0;
 	public final static String COMPOSE = "compose";
+	public final static String BY_DESIGNATION = "by_designation";
+	public final static String GET_RESOURCES = "get_resources";
+	public final static String ADD_RESOURCE = "add_resource";
 	public final static String EXISTS = "exists";
 	public final static String ADMIN = "admin";
 	public final static String USERNAME = "username";
@@ -27,6 +39,10 @@ public class Constants {
 	public final static String FALSE = "false";
 	public final static String COUNTRY_EXISTS = "countryExists";
 	// constants for messages
+	public final static String INBOX = "inbox";
+	public final static String SENT = "sent";
+	public final static String INBOX_DELETE = "inbox_delete";
+	public final static String SENT_DELETE = "sent_delete";
 	public final static int READ = 1;
 	public final static int UNREAD = -1;
 	public final static int FROM_HAS_NOT_DELETED_SENT_MSG = 1;
@@ -35,7 +51,7 @@ public class Constants {
 	public final static int TO_HAS_DELETED_RECEIVED_MSG = -1;
 	public final static int TRASHED = -1;
 	public final static String WELCOME_SUBJECT = "Welcome to WFMS";
-	public static final String GREETING = "Greetings from WFMS.<br><br>";
+	public static final String GREETING = "Greetings from WFMS.<br>";
 	public static final String SINGLE_LINE_BREAK = "<br><br>";
 	public static final String HI = "Hi";
 	public static final String COMMA = ",";
@@ -47,5 +63,6 @@ public class Constants {
 	public static final String USERNAME_PASSWORD_TEXT = "Please find below your username and password. Please update your password after first login.<BR><BR>";
 	public static final String REGISTER_MSG = "Thank you for joining WFMS.<br><br>";
 	public static final String FOR_QUERIES_MSG = "For any queries, mail us at info@wfms.com<br><br>";
+	public static final String DETAILS_SAVED_SUCCESSFULLY = "details saved successfully";
 	
 }

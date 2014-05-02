@@ -23,17 +23,6 @@ $().ready(function() {
 <div id="page">
 <div id="content">
 <div class="box">
-<a href="index" title="click here to go to home page">home</a> | 
-	<a href="login" title="click here to login">login</a> | <a href="registration" title="click here to register">registration</a>
-	</div>
-</div>
-</div>
-<br class="clearfix" />
-</div>
-<div id="wrapper">
-<div id="page">
-<div id="content">
-<div class="box">
 <table id="table-page-heading" border="0">
 <tr>
 <td><h4>Login</h4></td>
@@ -56,11 +45,11 @@ else if(code!=null && code.equals("2"))
 </tr>
 <tr>
 	<td class="bold" width="10%">username <span class="boldred">*</span></td>
-	<td><input name="username" id="username" /></td>
+	<td><input name="username" id="username" placeholder="enter username" /></td>
 </tr>
 <tr>
 	<td class="bold">passowrd <span class="boldred">*</span></td>
-	<td><input type="password" name="password" id="password" /></td>
+	<td><input type="password" name="password" id="password" placeholder="enter password" /></td>
 </tr>
 <tr>
 	<td>&nbsp;</td>

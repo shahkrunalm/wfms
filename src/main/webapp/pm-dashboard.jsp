@@ -14,26 +14,32 @@
 			<div id="content">
 				<div id="inner_content">
 					<div class="box">
-						Message: <a href="add-blood-record.jsp"
-							title="click here to add blood record">add</a> | <a
-							href="view-blood-record-list"
-							title="click here to view blood record list">view</a>
+						Message: <a href="compose-message.jsp"
+							title="click here to compose message">compose</a> | <a
+							href="./MessageController?action=inbox"
+							title="click here to go to inbox">inbox</a> | <a
+							href="./MessageController?action=sent"
+							title="click here to go to sent">sent</a>
 					</div>
 				</div>
 				<div id="inner_content">
 					<div class="box">
 						Project: <a
-							href="./ProjectController?action=view"
+							href="./ProjectController?action=view&status=-1"
 							title="click here to view project list">view</a>
 					</div>
 				</div>
 				<div id="inner_content">
 					<div class="box">
-						profile: <a href="view-profile.jsp"
-							title="click here to view profile">view</a> | <a
-							href="edit-profile.jsp" title="click here to edit profile">edit</a>
+						profile: <a href="./UserController?action=detail&userId=<%=((User) session.getAttribute("userssn")).getUserId()%>"
+							title="click here to view profile">view</a>
 						| <a href="change-password.jsp"
 							title="click here to change password">change password</a>
+					</div>
+				</div>
+				<div id="inner_content">
+					<div class="box">
+						Resource: <a href="./UserController?action=get_resources" title="click here to add resource">add</a>
 					</div>
 				</div>
 				<div id="inner_content">
