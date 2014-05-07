@@ -1,3 +1,4 @@
+<%@page import="com.wfms.util.Utility"%>
 <%@page import="com.wfms.util.Constants"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -40,6 +41,8 @@
 						<tr>
 							<th>Sr. No.</th>
 							<th>Task Name</th>
+							<th>Created By</th>
+							<th>Created On</th>
 							<th>Edit</th>
 							<th>Delete</th>
 							<th>Status</th>
@@ -54,6 +57,8 @@
 							<a href="./TaskController?action=detail&taskId=<%=task.getTaskId()%>"
 							   title="click here to view task detail"><%=task.getTaskName()%></a>
 							</td>
+							<td align="center"><%=task.getCreatedBy()%></td>
+							<td align="center"><%=Utility.getOnlyDate(task.getCreatedOn())%></td>
 							<td align="center">edit</td>
 							<td align="center">delete</td>
 							<td align="center">

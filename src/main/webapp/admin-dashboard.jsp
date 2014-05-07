@@ -9,7 +9,7 @@
 <%@ include file="header.jsp"%>
 <body>
 	<%@ include file="menu.jsp"%>
-	<%@ include file="default-password.jsp"%>
+	<%@ include file="default-description.jsp"%>
 	<div id="wrapper">
 		<div id="page">
 			<div id="content">

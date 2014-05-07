@@ -14,6 +14,8 @@ public class Constants {
 	public final static String MY_TASK = "my_task";
 	public final static String ASSIGN = "assign";
 	public final static String UPDATE_TASK_STATUS = "update_task_status";
+	public final static String VIEW_STORIES_BY_PROJECT = "view-stories-by-project";
+	public final static int SOFT_DELETE = -100;
 	public final static int ACTIVE = 1;
 	public final static int OPEN = 1;
 	public final static int IN_PROGRESS = 2;

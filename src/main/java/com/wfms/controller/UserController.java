@@ -100,7 +100,7 @@ public class UserController extends HttpServlet {
 				}else{
 					HttpSession ssn = request.getSession(true);
 					ssn.setAttribute("userssn", this.user);
-					ssn.setAttribute("lastLogin", this.user.getLastLoginDateTime());
+					ssn.setAttribute("lastLogin", Utility.getFormattedDate(this.user.getLastLoginDateTime()));
 					this.user.setLastLoginDateTime(new Date());
 					this.userDao.update(this.user);
 					if(this.user.getDesignation().getDesignationId() == UserType.DELIVERY_MANAGER){
@@ -125,11 +125,11 @@ public class UserController extends HttpServlet {
 			if (action.equals(Constants.ADD)) {
 				this.user = this.populateUser(request);
 				this.userDao.save(this.user);
-
+				LOGGER.info("USER " + Constants.DETAILS_SAVED_SUCCESSFULLY);
 				// send welcome message
 				this.message = this.getWelcomeMessage(this.user);
 				this.messageDao.save(this.message);
-
+				LOGGER.info("MESSAGE " + Constants.DETAILS_SAVED_SUCCESSFULLY);
 				// populating active delivery manager list
 				getServletContext().setAttribute(
 						"activeDMList",
@@ -155,7 +155,7 @@ public class UserController extends HttpServlet {
 			} else if (action.equals(Constants.DELETE)) {
 				final long userId = Long.parseLong(request
 						.getParameter("userId"));
-				LOGGER.info("DELETE USER METHOD CALLED" + userId);
+				LOGGER.info("DELETE USER METHOD CALLED - " + userId);
 				this.user = (User) this.context.getBean("user");
 				this.user = this.userDao.read(userId);
 				this.userDao.delete(this.user);
@@ -215,7 +215,9 @@ public class UserController extends HttpServlet {
 			} else if (action.equals(Constants.GET_RESOURCES)) {
 				if(user.getDesignation().getDesignationId() == UserType.ADMIN){
 					request.setAttribute("projectList", getServletContext().getAttribute("activeProjectList"));
-				}else{
+				}else if(user.getDesignation().getDesignationId() == UserType.DELIVERY_MANAGER){
+					request.setAttribute("projectList", this.projectDao.getProjectList("DM_USER_ID", user.getUserId(), Constants.ACTIVE));
+				}else if(user.getDesignation().getDesignationId() == UserType.PROJECT_MANAGER){
 					request.setAttribute("projectList", this.projectDao.getProjectList("PM_USER_ID", user.getUserId(), Constants.ACTIVE));
 				}
 				this.userList = this.userDao.getResourcePoolList();

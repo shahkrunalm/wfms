@@ -9,11 +9,12 @@
 <%@ include file="header.jsp"%>
 <body>
 	<%@ include file="menu.jsp"%>
+	<%@ include file="default-description.jsp"%>
 	<div id="wrapper">
 		<div id="page">
 			<div id="content">
 				<div id="inner_content">
-					<div class="box">
+					<div class="inner_box">
 						Message: <a href="compose-message.jsp"
 							title="click here to compose message">compose</a> | <a
 							href="./MessageController?action=inbox"
@@ -23,14 +24,14 @@
 					</div>
 				</div>
 				<div id="inner_content">
-					<div class="box">
+					<div class="inner_box">
 						Project: <a
 							href="./ProjectController?action=view&status=-1"
 							title="click here to view project list">view</a>
 					</div>
 				</div>
 				<div id="inner_content">
-					<div class="box">
+					<div class="inner_box">
 						profile: <a href="./UserController?action=detail&userId=<%=((User) session.getAttribute("userssn")).getUserId()%>"
 							title="click here to view profile">view</a>
 						| <a href="change-password.jsp"
@@ -38,10 +39,8 @@
 					</div>
 				</div>
 				<div id="inner_content">
-					<div class="box">
-						Story: <a href="add-story.jsp" title="click here to add story">add</a>
-						| <a href="./StoryController?action=view"
-							title="click here to view story list">view</a>
+					<div class="inner_box">
+						Resource: <a href="./UserController?action=get_resources" title="click here to add resource">add</a>
 					</div>
 				</div>
 			</div>

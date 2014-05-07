@@ -64,10 +64,8 @@
 							<td>
 								<%
 									if (project.getStories().size() == 0) {
-								%><div class="red">No
-									record found</div> <%
- 	}
- %>
+								%>No record found | <%}%><a href="add-story.jsp?projectId=<%=project.getProjectId()%>"
+											title="click here to add story">add story</a>
 							</td>
 						</tr>
 						<%
@@ -77,13 +75,13 @@
 							<td colspan="2">
 								<table border="0" width="100%">
 									<tr>
-										<td align="center">Sr. No.</td>
-										<td>Story Name</td>
-										<td align="center">View Task</td>
-										<td align="center">Add Task</td>
-										<td align="center">Edit</td>
-										<td align="center">Delete</td>
-										<td align="center">Status</td>
+										<td align="center" class="bold">Sr. No.</td>
+										<td class="bold">Story Name</td>
+										<td align="center" class="bold">View Task</td>
+										<td align="center" class="bold">Add Task</td>
+										<td align="center" class="bold">Edit</td>
+										<td align="center" class="bold">Delete</td>
+										<td align="center" class="bold">Status</td>
 									</tr>
 
 									<%
@@ -95,15 +93,27 @@
 										<td><a
 											href="./StoryController?action=detail&storyId=<%=story.getStoryId()%>"
 											title="click here to view story detail"><%=story.getStoryName()%></a></td>
-										<td align="center">view (<%=story.getTasks().size()%>)
+										<td align="center">
+										<a
+											href="./StoryController?action=detail&storyId=<%=story.getStoryId()%>"
+											title="click here to view story detail">
+										view (<%=story.getTasks().size()%>)</a>
 										</td>
 										<td align="center"><a
 											href="add-task.jsp?storyId=<%=story.getStoryId()%>"
 											title="click here to add taks">add</td>
 										<td align="center">edit</td>
 										<td align="center">delete</td>
-										<td align="center"><%=story.getStatus()%></td>
-									</tr>
+										<td align="center">
+											<%
+												if (story.getStatus() == 1) {
+											%><div class="green">active</div> <%
+			 								} else {
+			 								%><div class="red">de-active</div> <%
+			 								}
+											 %>
+										</td>
+										</tr>
 									<%
 										}
 									%>

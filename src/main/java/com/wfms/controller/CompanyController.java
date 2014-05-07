@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,6 +41,9 @@ public class CompanyController extends HttpServlet {
 	private ApplicationContext context = null;
        
 	private List<Company> companyList = new ArrayList<Company>();
+	
+	private static final Logger LOGGER = Logger.getLogger(CompanyController.class
+			.getName());
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -74,8 +78,13 @@ public class CompanyController extends HttpServlet {
 				request.getRequestDispatcher("view-company-list.jsp").forward(request, response);
 			}else if(action.equals(Constants.DELETE)){
 				final long companyId = Long.parseLong(request.getParameter("companyId"));
+				LOGGER.info("DELETE METHOD CALLED FOR COMPANY ID " + companyId);
+				this.company = (Company) this.context.getBean("company");
 				this.company = this.companyDao.read(companyId);
-				this.companyDao.delete(company);
+				this.companyDao.delete(this.company);
+				this.companyList = this.companyDao.getListByCriteria(this.company, "companyName", Integer.parseInt(request.getParameter("status")));
+				request.setAttribute("companyList", this.companyList);
+				request.getRequestDispatcher("view-company-list.jsp").forward(request, response);
 			}else if(action.equals(Constants.DETAIL)){
 				final long companyId = Long.parseLong(request.getParameter("companyId"));
 				this.company = this.companyDao.read(companyId);

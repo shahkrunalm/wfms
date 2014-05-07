@@ -73,10 +73,10 @@
 								<%
 									if (project.getStatus() == 1) {
 								%><div class="green">active</div> <%
- 	} else {
- %><div class="red">de-active</div> <%
- 	}
- %>
+ 								} else {
+ 								%><div class="red">de-active</div> <%
+ 								}
+								 %>
 							</td>
 						</tr>
 						<%

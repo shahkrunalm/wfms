@@ -85,6 +85,11 @@ public class StoryController extends HttpServlet {
 				this.story = this.storyDao.read(storyId);
 				request.setAttribute("story", this.story);
 				request.getRequestDispatcher("view-story-detail.jsp").forward(request, response);
+			}else if(action.equals(Constants.VIEW_STORIES_BY_PROJECT)){
+				final long projectId = Long.parseLong(request.getParameter("projectId"));
+				this.storyList = this.storyDao.getStoryListByProject(projectId, Integer.parseInt(request.getParameter("status")));
+				request.setAttribute("storyList", this.storyList);
+				request.getRequestDispatcher("view-story-list.jsp").forward(request, response);	
 			}
 
 		}else{

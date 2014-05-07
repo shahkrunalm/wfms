@@ -7,8 +7,22 @@
 <title>View Company List - wfms</title>
 
 <%@ include file="header.jsp"%>
+<script type="text/javascript">
+function deleteCompany(companyId){
+	var confirmation = confirm("Are you sure you want to delete this company detail ?");
+	if(confirmation){
+		document.getElementById("deleteCompanyId").value = companyId;
+		document.getElementById("delete-company-form").submit();
+	}
+}
+</script>
 </head>
 <body>
+	<form name="delete-company-form" id="delete-company-form" action="./CompanyController" method="post">
+		<input type="hidden" name="action" value="delete">
+		<input type="hidden" name="companyId" id="deleteCompanyId">
+		<input type="hidden" name="status" value="<%=request.getParameter("status")%>">
+	</form>
 	<%
 		List<Company> companyList = (List<Company>) request
 				.getAttribute("companyList");
@@ -63,7 +77,7 @@
 								title="click here to view company detail"><%=company.getCompanyName()%></a></td>
 							<td align="center"><%=company.getProjects().size()%></td>
 							<td align="center">edit</td>
-							<td align="center">delete</td>
+							<td align="center"><a href="javascript:deleteCompany(<%=company.getCompanyId()%>)" title="click here to delete company detail">delete</a></td>
 							<td align="center">
 								<%
 									if (company.getStatus() == 1) {

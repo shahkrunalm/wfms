@@ -1,3 +1,4 @@
+<%@page import="com.wfms.util.Constants"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -42,6 +43,9 @@
 						action="./StoryController" method="post">
 						<input type="hidden" name="action" value="add" />
 						<table width="100%">
+							<%
+							if(user.getUserType().trim().equals("Admin")) {
+							%>
 							<tr>
 								<td class="bold" width="10%">Select Project</td>
 								<td><select name="projectId" id="projectId">
@@ -54,6 +58,11 @@
 										%>
 								</select></td>
 							</tr>
+							<%} else if(user.getUserType().trim().equals("Project Lead") || user.getUserType().trim().equals("Developer")){ %>
+								<input type="hidden" name="projectId" value="<%=user.getProject().getProjectId() %>" />
+							<% } else if(user.getUserType().trim().equals("Project Manager") || user.getUserType().trim().equals("Delivery Manager")) {%>
+								<input type="hidden" name="projectId" value="<%=request.getParameter("projectId")%>" />
+							<%} %>
 							<tr>
 								<td class="bold" width="15%">Story Name</td>
 								<td><input name="storyName" id="storyName"
@@ -61,8 +70,8 @@
 							</tr>
 							<tr>
 								<td class="bold" width="15%">Description</td>
-								<td><input name="description" id="description"
-									placeholder="enter description" /></td>
+								<td><textarea rows="5" cols="25" name="description"
+										id="description" placeholder="enter description"></textarea></td>
 							</tr>
 							<tr>
 								<td>&nbsp;</td>

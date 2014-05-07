@@ -1,3 +1,4 @@
+<%@page import="com.wfms.util.Constants"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -28,6 +29,10 @@
 							if (story != null) {
 						%>
 						<tr>
+							<td width="15%" class="bold">Project Name</td>
+							<td><%=story.getProject().getProjectName()%></td>
+						</tr>
+						<tr>
 							<td width="15%" class="bold">Story Name</td>
 							<td><%=story.getStoryName()%></td>
 						</tr>
@@ -36,13 +41,18 @@
 							<td><%=story.getDescription()%></td>
 						</tr>
 						<tr>
+							<td width="15%" class="bold">Created By</td>
+							<td><%=story.getCreatedBy()%></td>
+						</tr>
+						<tr>
 							<td width="15%" class="bold">Created On</td>
 							<td><%=com.wfms.util.Utility.getOnlyDate(story.getCreatedOn())%></td>
 						</tr>
 						<tr>
-							<td width="15%" class="bold">Stories</td>
+							<td width="15%" class="bold">Tasks</td>
 							<td>
-							<%if(story.getTasks().size()==0){ %><div class="red">No record found</div> <%} %>
+							<%if(story.getTasks().size()==0){ %>No record found |<%} %> <a href="add-task.jsp?storyId=<%=story.getStoryId() %>"
+											title="click here to add task">add task</a>
 							</td>
 						</tr>
 						<%if(story.getTasks().size()>0){ %>
@@ -50,11 +60,13 @@
 							<td colspan="2">
 								<table border="0" width="100%">
 									<tr>
-										<td align="center">Sr. No.</td>
-										<td>Task Name</td>
-										<td align="center">Edit</td>
-										<td align="center">Delete</td>
-										<td align="center">Status</td>
+										<td align="center" class="bold">Sr. No.</td>
+										<td class="bold">Task Name</td>
+										<td align="center" class="bold">Created By</td>
+										<td align="center" class="bold">Assign To</td>
+										<td align="center" class="bold">Status</td>
+										<td align="center" class="bold">Edit</td>
+										<td align="center" class="bold">Delete</td>
 									</tr>
 
 									<%
@@ -68,9 +80,36 @@
 											<%=task.getTaskName()%>
 											</a>
 										</td>
+										<td align="center">
+											<%=task.getCreatedBy() %>
+										</td>
+										<td align="center">
+										<%
+											if(task.getUser()!=null){
+												%><a href="./UserController?action=detail&userId=<%=task.getUser().getUserId()%>"
+							 						title="click here to view user detail"><%=task.getUser().getUsername()%></a>
+												<%
+											} else {
+												%><a href="./TaskController?action=assign_task&taskId=<%=task.getTaskId()%>">assign</a><% 
+											}
+										%>
+										</td>
+										<td align="center">
+										<%
+											if(task.getStatus() == Constants.OPEN)
+												out.print("Open");
+											else if(task.getStatus() == Constants.IN_PROGRESS)
+												out.print("In Progress");
+											else if(task.getStatus() == Constants.BLOCKED)
+												out.print("Blocked");
+											else if(task.getStatus() == Constants.CLOSED)
+												out.print("Closed");
+											else
+												out.print("-");
+										%>
+										</td>
 										<td align="center">edit</td>
 										<td align="center">delete</td>
-										<td align="center"><%=task.getStatus()%></td>
 									</tr>
 									<%
 										}

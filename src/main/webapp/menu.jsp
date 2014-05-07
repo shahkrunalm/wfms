@@ -16,11 +16,7 @@
 				%><table border="0" width="100%">
 					<tr>
 						<td>
-							<%
-								out.print("Welcome back, " + user.getUsername() + ". ");
-									out.print("your last login " + user.getLastLoginDateTime()
-											+ " ");
-							%>
+							<%	out.print("Welcome back, " + user.getUsername()); %>
 						</td>
 						<td align="right"><%
 							if (user.getDesignation().getDesignationId() == 1) {

@@ -4,16 +4,29 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Developer dashboard - wfms</title>
+<title>Project Lead dashboard - wfms</title>
 </head>
 <%@ include file="header.jsp"%>
 <body>
 	<%@ include file="menu.jsp"%>
+	<%@ include file="default-description.jsp"%>
 	<div id="wrapper">
 		<div id="page">
 			<div id="content">
 				<div id="inner_content">
-					<div class="box">
+					<div class="inner_box">
+						Story: <a href="add-story.jsp" title="click here to add story">add</a> | 
+						<a href="./StoryController?action=view-stories-by-project&status=-1&projectId=<%=((User) session.getAttribute("userssn")).getProject().getProjectId()%>" title="click here to view stories">view</a>
+					</div>
+				</div>
+				<div id="inner_content">
+					<div class="inner_box">
+						Task: <a href="./TaskController?action=my_task"
+							title="click here to view task assign to you">view</a>
+					</div>
+				</div>
+				<div id="inner_content">
+					<div class="inner_box">
 						Message: <a href="compose-message.jsp"
 							title="click here to compose message">compose</a> | <a
 							href="./MessageController?action=inbox"
@@ -23,17 +36,12 @@
 					</div>
 				</div>
 				<div id="inner_content">
-					<div class="box">
-						profile: <a href="./UserController?action=detail&userId=<%=((User) session.getAttribute("userssn")).getUserId()%>"
-							title="click here to view profile">view</a>
-						| <a href="change-password.jsp"
-							title="click here to change password">change password</a>
-					</div>
-				</div>
-				<div id="inner_content">
-					<div class="box">
-						Task: <a href="./TaskController?action=my_task"
-							title="click here to view task assign to you">view</a>
+					<div class="inner_box">
+						profile: <a
+							href="./UserController?action=detail&userId=<%=((User) session.getAttribute("userssn")).getUserId()%>"
+							title="click here to view profile">view</a> | <a
+							href="change-password.jsp" title="click here to change password">change
+							password</a>
 					</div>
 				</div>
 			</div>

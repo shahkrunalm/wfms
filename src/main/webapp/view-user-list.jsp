@@ -104,7 +104,7 @@ function changeStatus(userId, status){
 							 	title="click here to view user detail"><%=u.getFirstName()%> <%=u.getLastName()%></a></td>
 							<td align="center"><%=u.getUserType()%></td>
 							<td align="center">edit</td>
-							<td align="center">delete</td>
+							<td align="center"><a href="javascript:deleteUser(<%=u.getUserId()%>)" title="click here to delete user detail">delete</a></td>
 							<td align="center">
 								<%
 									if (u.getStatus() == Constants.ACTIVE) {

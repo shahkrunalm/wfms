@@ -25,11 +25,21 @@
 						</tr>
 					</table>
 					<table>
+						<%
+						if(user.getUserType().trim().equals("Admin")) {
+						%>
 						<tr>
-							<td><a href="./ProjectController?action=view&status=1" title="click here to view active list">active</a>
-								| <a href="./ProjectController?action=view&status=0" title="click here to view de-active list">de-active</a>
-								| <a href="./ProjectController?action=view&status=-1" title="click here to view all">view all</a></td>
+							<td><a href="./StoryController?action=view&status=1" title="click here to view active list">active</a>
+								| <a href="./StoryController?action=view&status=0" title="click here to view de-active list">de-active</a>
+								| <a href="./StoryController?action=view&status=-1" title="click here to view all">view all</a></td>
 						</tr>
+						<%} else { %>
+						<tr>
+							<td><a href="./StoryController?action=view-stories-by-project&status=1&projectId=<%=((User) session.getAttribute("userssn")).getProject().getProjectId()%>" title="click here to view active list">active</a>
+								| <a href="./StoryController?action=view-stories-by-project&status=0&projectId=<%=((User) session.getAttribute("userssn")).getProject().getProjectId()%>" title="click here to view de-active list">de-active</a>
+								| <a href="./StoryController?action=view-stories-by-project&status=-1&projectId=<%=((User) session.getAttribute("userssn")).getProject().getProjectId()%>" title="click here to view all">view all</a></td>
+						</tr>
+						<%}%>
 						<tr>
 							<td>&nbsp;</td>
 						</tr>
@@ -69,7 +79,7 @@
 							<td align="center"><%=story.getProject().getProjectName()%></td>
 							<td align="center"><%=story.getTasks().size()%></td>
 							<td align="center"><a href="add-task.jsp?storyId=<%=story.getStoryId() %>"
-											title="click here to add task">add</td>
+											title="click here to add task">add</a></td>
 							<td align="center">edit</td>
 							<td align="center">delete</td>
 							<td align="center">
