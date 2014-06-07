@@ -123,7 +123,16 @@ public class Message {
 	public void setMsgTo(String msgTo) {
 		this.msgTo = msgTo;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Message [messageId=" + messageId + ", msgFrom=" + msgFrom
+				+ ", msgTo=" + msgTo + ", subject=" + subject + ", content="
+				+ content + ", dateTime=" + dateTime + ", fromDeleteStatus="
+				+ fromDeleteStatus + ", toDeleteStatus=" + toDeleteStatus
+				+ ", readStatus=" + readStatus + ", trashStatus=" + trashStatus
+				+ "]";
+	}
 	
 	
 }

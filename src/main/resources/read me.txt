@@ -1,0 +1,7 @@
+This project is created for Jaimini, Sefali and Hemangi.
+
+Delete and edit functionality has session problem.
+
+To add screen shots in presentation, I have updated database rows and jsp pages, which may be not working.
+
+ 

@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,7 +32,7 @@ public class State {
 	@JoinColumn(name = "COUNTRY_ID")  
 	private Country country;
 
-	@OneToMany(mappedBy = "state")  
+	@OneToMany(mappedBy = "state")
 	private Set<City> cities = new HashSet<City>();
 	
 	public long getStateId() {

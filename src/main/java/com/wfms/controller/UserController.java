@@ -233,7 +233,23 @@ public class UserController extends HttpServlet {
 				this.userDao.update(this.user);
 				response.sendRedirect(request.getContextPath()
 						+ "/added-resource.jsp");
-			} else if (action.equals(Constants.LOGOUT)) {
+			} else if (action.equals(Constants.CHANGE_STATUS)){
+				LOGGER.info("CHANGE USER STATUS METHOD CALLED ");
+
+				this.user = (User) this.context.getBean("user");
+				this.user = this.userDao.read(Long.parseLong(request
+						.getParameter("userId")));
+				final int status = Integer.parseInt(request.getParameter("status"));
+				
+				
+				this.user.setStatus(Integer.parseInt(request.getParameter("userStatus")));
+				this.userDao.update(this.user);
+				this.userList = this.userDao.getListByCriteria(this.user,
+						"username", status);
+				request.setAttribute("userList", this.userList);
+				request.getRequestDispatcher("view-user-list.jsp").forward(
+						request, response);
+			}	else if (action.equals(Constants.LOGOUT)) {
 				this.userDao.logout(session);
 				response.sendRedirect(request.getContextPath() + "/login.jsp");
 			}
@@ -262,6 +278,7 @@ public class UserController extends HttpServlet {
 		message.setReadStatus(Constants.UNREAD);
 		message.setFromDeleteStatus(Constants.FROM_HAS_NOT_DELETED_SENT_MSG);
 		message.setToDeleteStatus(Constants.TO_HAS_NOT_DELETED_RECEIVED_MSG);
+		LOGGER.info("msg content " + message);
 		return message;
 	}
 
@@ -306,6 +323,7 @@ public class UserController extends HttpServlet {
 		user.setUserType(this.designation.getDesignationName());
 		user.setRegistrationDate(new Date());
 		user.setStatus(Constants.ACTIVE);
+		user.setLastLoginDateTime(new Date());
 		final String birthDate = request.getParameter("birthDate");
 		user.setGender(request.getParameter("gender"));
 		if (birthDate != null) {
